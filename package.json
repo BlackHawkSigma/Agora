@@ -22,5 +22,8 @@
     "method-override": "^2.3.7",
     "morgan": "^1.7.0",
     "pug": "^2.0.0-beta6"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1"
   }
 }
