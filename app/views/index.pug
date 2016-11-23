@@ -1,7 +1,34 @@
-html
+doctype html
+html(lang="de")
   head
-    title Welcome
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    meta(charset="utf-8")
+    title Paintshop 5 App
+    link(rel='stylesheet' href='/bootstrap/css/bootstrap.min.css')
+    script(type="text/javascript" src="/bootstrap/js/jquery-3.1.1.min.js")
+    script(type="text/javascript" src="/bootstrap/js/bootstrap.min.js")
   body
-    div.page-header
+    nav.navbar.navbar-default(role="navigation")
+      div.navbar-header
+        button.navbar-toggle(
+            type="button"
+            data-toggle="collapse"
+            data-target="#nav-toggle"
+          )
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="#") Paintshop App
+      #nav-toggle.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li.active: a(href="#") Berichte
+          li: a(href="#") VOs
+        form.navbar-form.navbar-right(role="search")
+          input.form-control(
+              type="text"
+              placeholder="Search"
+            )
+    #page-header.page-header
       h2 Welcome!
+    #main.container
+      div.jumbotron
+        p content
