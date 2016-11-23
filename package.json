@@ -1,14 +1,21 @@
 {
   "name": "paintline_app",
   "version": "0.1.0",
-  "description": "",
+  "description": "App for Paintline 5",
   "main": "index.js",
+  "repository": "https://blackhawksigma@github.com/BlackHawkSigma/PaintlineApp.git",
+  "private": true,
   "scripts": {
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "paintline"
   ],
   "author": "Tobias Beese",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta6"
+  }
 }
