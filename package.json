@@ -2,12 +2,12 @@
   "name": "paintline_app",
   "version": "0.1.0",
   "description": "App for Paintline 5",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://blackhawksigma@github.com/BlackHawkSigma/PaintlineApp.git",
   "private": true,
   "scripts": {
-    "start": "node index",
-    "test": "DEBUG=main node index"
+    "start": "node server",
+    "test": "DEBUG=server node server"
   },
   "keywords": [
     "paintline"
