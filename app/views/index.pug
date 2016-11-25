@@ -21,7 +21,16 @@ html(lang="de")
       #nav-toggle.collapse.navbar-collapse
         ul.nav.navbar-nav
           li.active: a(href="#") Schichtbuch
-          li: a(href="#") Wartungsplan
+          li.dropdown
+            a.dropdown-toggle(
+              href="#"
+              data-toggle="dropdown"
+              role="button"
+            ) Wartungsplan
+              span.caret
+            ul.dropdown-menu
+              li: a(href="#") &Uuml;bersicht
+              li: a(href="#") dringend
         form.navbar-form.navbar-right(role="search")
           input.form-control(
               type="text"
