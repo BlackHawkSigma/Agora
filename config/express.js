@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const compress = require('compression');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const favicon = require('serve-favicon');
 
 module.exports = function() {
   var app = express();
@@ -23,6 +24,7 @@ module.exports = function() {
   app.set('views', './app/views');
 
   app.use(express.static('./public'));
+  app.use(favicon('./public/favicon.ico'));
 
   require('../app/routes/index.server.routes.js')(app);
 
