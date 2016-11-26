@@ -23,24 +23,25 @@ html(lang="de")
           a.navbar-brand(href="#") Paintshop App
         #nav-toggle.collapse.navbar-collapse
           ul.nav.navbar-nav
-            li.active: a(href="#") Schichtbuch
+            li.active: a(href="#") &Uuml;bersicht
+            li: a(href="#") Schichtbuch
+            li: a(href="#") Wartungsplan
             li.dropdown
               a.dropdown-toggle(
                 href="#"
                 data-toggle="dropdown"
                 role="button"
-              ) Wartungsplan
+              ) Auswertungen
                 span.caret
               ul.dropdown-menu
-                li: a(href="#") &Uuml;bersicht
-                li: a(href="#") dringend
+                li: a(href="#") nach Schichten
+                li: a(href="#") nach Tagen
           form.navbar-form.navbar-right(role="search")
             input.form-control(
                 type="text"
                 placeholder="Search"
               )
-    #page-header.page-header
-      h2 Welcome!
-    #main.container
+    h1.page-header Welcome
+    #main.container-fluid
       div.jumbotron
         p content
