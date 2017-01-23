@@ -27,6 +27,7 @@ module.exports = function() {
   app.use(favicon('./public/favicon.ico'));
 
   require('../app/routes/index.server.routes.js')(app);
+  require('../app/routes/artikel.server.routes.js')(app);
 
   return app;
 };

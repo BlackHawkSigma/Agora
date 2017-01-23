@@ -4,6 +4,7 @@ const debug = require('debug')('server');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('./config/express');
+var mysql = require('./config/mysql');
 
 var app = express();
 
