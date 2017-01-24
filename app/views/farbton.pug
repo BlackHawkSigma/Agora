@@ -1,0 +1,23 @@
+doctype html
+html(lang="de")
+  head
+    meta(charset"utf-8")
+    meta(name="viewport" content="initial-scale=1")
+    title= title
+  body
+    h1= title
+    #container
+      table
+        thead
+          tr: th(colspan="2") Farbt&ouml;ne
+          tr
+            th Farbcode
+            th Farbton
+        tbody
+          each color in colors
+            tr
+              td= color.Farbcode
+              td= color.Farbton
+
+    script(type="text/javascript" src="/lib/angular/angular.min.js")
+    script(type="text/javascript" src="/application.js")
