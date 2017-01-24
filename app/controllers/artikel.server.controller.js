@@ -11,8 +11,6 @@ exports.list = function (req, res, next) {
       return;
     }
 
-    console.log('connected as id ' + connection.threadId);
-
     connection.query("SELECT * from artikel", function(err, rows, fields) {
       connection.release();
 
