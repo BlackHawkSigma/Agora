@@ -1,0 +1,20 @@
+doctype html
+html(lang="de")
+  head
+    meta(charset"utf-8")
+    meta(name="viewport" content="initial-scale=1")
+    link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
+    title= title
+  body
+    h1.page-header= title
+    #main.container-fluid
+      section(ng-view)
+
+
+    script(type="text/javascript" src="/lib/angular/angular.min.js")
+    script(type="text/javascript" src="/lib/angular-loading-bar/build/loading-bar.min.js")
+    script(type="text/javascript" src="/lib/angular-route/angular-route.min.js")
+    
+    script(type="text/javascript" src="/application.js")
+    script(type="text/javascript" src="/cosmino/cosmino.client.module.js")
+    script(type="text/javascript" src="/cosmino/config/cosmino.client.routes.js")

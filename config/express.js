@@ -29,6 +29,7 @@ module.exports = function() {
   require('../app/routes/index.server.routes.js')(app);
   require('../app/routes/artikel.server.routes.js')(app);
   require('../app/routes/farbton.server.routes.js')(app);
+  require('../app/routes/cosmino.server.routes.js')(app);
 
   return app;
 };
