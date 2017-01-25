@@ -1,0 +1,6 @@
+section(data-ng-controller="ArtikelCtrl" data-ng-init="find()")
+  h1 Artikel View
+  ul
+    li(data-ng-repeat="art in artikel")
+      p(data-ng-bind="art.Materialkurztext")
+      br
