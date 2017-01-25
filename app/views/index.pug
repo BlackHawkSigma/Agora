@@ -7,9 +7,12 @@ html(lang="de")
     link(rel="stylesheet" href="/lib/angular-loading-bar/build/loading-bar.min.css")
     title= title
   body
-    h1.page-header= title
-    #main.container-fluid
-      section(ng-view)
+    div.container
+      navigation
+
+      h1.page-header= title
+      #main.container-fluid
+        section(ng-view)
 
 
     script(type="text/javascript" src="/lib/angular/angular.min.js")
@@ -31,3 +34,6 @@ html(lang="de")
     script(type="text/javascript" src="/cosmino/artikel/controllers/artikel.client.controller.js")
     script(type="text/javascript" src="/cosmino/artikel/services/artikel.client.service.js")
     script(type="text/javascript" src="/cosmino/artikel/config/artikel.client.routes.js")
+
+    script(type="text/javascript" src="/navigation/services/navigation.client.service.js")
+    script(type="text/javascript" src="/navigation/directives/navigation.client.directive.js")

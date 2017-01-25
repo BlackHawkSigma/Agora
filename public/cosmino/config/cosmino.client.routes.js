@@ -2,7 +2,8 @@ angular.module('cosmino').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
     when('/', {
-      templateUrl: 'cosmino/view'
+      templateUrl: 'cosmino/view',
+      name: "Main"
     }).
     otherwise({
       redirectTo: '/'
