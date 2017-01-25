@@ -1,1 +1,1 @@
-angular.module('cosmino', []);
+angular.module('cosmino', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
