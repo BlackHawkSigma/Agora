@@ -7,11 +7,11 @@ html(lang="de")
     link(rel="stylesheet" href="/lib/angular-loading-bar/build/loading-bar.min.css")
     title= title
   body
-    div.container
+    div.container-fluid
       navigation
 
-      h1.page-header= title
-      #main.container-fluid
+      #main.container
+        h1.page-header= title
         section(ng-view)
 
 
