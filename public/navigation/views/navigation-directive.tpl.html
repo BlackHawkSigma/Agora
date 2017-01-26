@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse" data-ng-class="{in: showMobileNav}">
     <ul class="nav navbar-nav">
       <li data-ng-repeat="route in routes" data-ng-class="{active: activeRoute(route)}">
-        <a href="#{{ route.path }}">{{ route.name }}</a>
+        <a ng-href="{{'#!' + route.path }}">{{ route.name }}</a>
       </li>
     </ul>
   </div>
