@@ -18,13 +18,5 @@ exports.list = function (req, res, next) {
         res.json(rows);
       }
     });
-
-    connection.on('error', function(err) {
-      res.json({
-        "code": 100,
-        "status": "Error in connection database"
-      });
-      return;
-    });
   });
 };
