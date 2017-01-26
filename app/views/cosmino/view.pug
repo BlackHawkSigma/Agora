@@ -1,24 +1,12 @@
 h1 Hello World!! :-)
 
-<div ng-controller="TimepickerDemoCtrl">
+#timepickerCtrl(ng-controller="TimepickerDemoCtrl")
 
-  <div uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
-  <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
-  <div class="row">
-    <div class="col-xs-6">
-      Hours step is:
-      <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
-    </div>
-    <div class="col-xs-6">
-      Minutes step is:
-      <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
-    </div>
-  </div>
+  #timepicker(uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+  pre.alert.alert-info Time is: {{mytime | date:'shortTime' }}
 
-  <hr>
+  hr
 
-  <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
-  <button type="button" class="btn btn-default" ng-click="update()">Set to 14:00</button>
-  <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
-
-</div>
+  button.btn.btn-default(type="button" ng-click="setEarly()") 06:00
+  button.btn.btn-default(type="button" ng-click="setLate()") 14:00
+  button.btn.btn-default(type="button" ng-click="setNight()") 22:00
