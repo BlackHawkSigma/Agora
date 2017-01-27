@@ -1,6 +1,16 @@
 section(data-ng-controller="ArtikelCtrl" data-ng-init="find()")
-  h1 Artikel View
-  ul
-    li(data-ng-repeat="art in artikel")
-      p(data-ng-bind="art.Materialkurztext")
-      br
+  h1.page-header Artikel Liste
+
+  table.table.table-hover.table-condensed
+    thead
+      tr
+        th #
+        th Artikel
+        th Baureihe
+        th Art
+    tbody
+      tr(data-ng-repeat="art in artikel")
+        td(data-ng-bind="art.Material")
+        td(data-ng-bind="art.Materialkurztext")
+        td(data-ng-bind="art.Baureihe")
+        td(data-ng-bind="art.Art")
