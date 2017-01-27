@@ -1,46 +1,11 @@
-var sql = require('../../config/mysql.js')();
+var bookshelf = require('../../config/bookshelf.js');
+var cosmino = require('../models/cosmino.server.model.js');
 
-exports.list = function (req, res, next) {
-  sql.getConnection(function(err, connection) {
-    if (err) {
-      connection.release();
-      res.json({
-        "code": 100,
-        "status": "Error in connection database"
-      });
-      return;
-    }
-
-    connection.query("SELECT * from farbton", function(err, rows, fields) {
-      connection.release();
-
-      if (!err) {
-        res.json(rows);
-      }
-    });
-  });
-};
-
-exports.render = function (req, res) {
-  sql.getConnection(function(err, connection) {
-    if (err) {
-      connection.release();
-      res.json({
-        "code": 100,
-        "status": "Error in connection database"
-      });
-      return;
-    }
-
-    connection.query("SELECT * from farbton", function(err, rows, fields) {
-      connection.release();
-
-      if (!err) {
-        res.render('farbton', {
-          title: 'Farbton Liste',
-          colors: rows
-        });
-      }
-    });
+exports.list = function(req, res) {
+  cosmino.Farbton().forge().fetchAll().then(function(result) {
+    res.json(result);
+  }).catch(function(err) {
+    console.error(err);
+    res.status(500).json({error: true, data: {message: err.message}});
   });
 };

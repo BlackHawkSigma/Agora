@@ -3,8 +3,12 @@ const debug = require('debug')('server');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+debug('starting app');
+
 var express = require('./config/express');
-var mysql = require('./config/mysql')();
+
+debug('loading bookshelf');
+var bookshelf = require('./config/bookshelf');
 
 var app = express();
 
@@ -29,8 +33,5 @@ if (process.platform === "win32") {
 // gracefully shut down everything
 process.on('SIGINT', function() {
   debug('exiting...');
-  mysql.end(function() {
-    debug('db connection closed');
-    process.exit();
-  });
+  process.exit();
 })
