@@ -1,6 +1,6 @@
 angular.module('artikel').factory('Artikel', ['$resource',
 function($resource) {
-  return $resource('/artikel', {}, {
+  return $resource('/api/artikel', {}, {
     list: {
       method: 'GET'
     }
