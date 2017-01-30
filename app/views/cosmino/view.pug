@@ -1,11 +1,24 @@
-
-#timepickerCtrl.well(ng-controller="TimepickerDemoCtrl")
-
-  pre.alert.alert-success {{mytime | date:"HH:mm 'Uhr'" }}
-  #timepicker(uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
-
-  hr
-
-  button.btn.btn-default(type="button" ng-click="setEarly()") 06:00
-  button.btn.btn-default(type="button" ng-click="setLate()") 14:00
-  button.btn.btn-default(type="button" ng-click="setNight()") 22:00
+div(ng-controller="TimepickerCtrl")
+  .row
+    .col-sm-4
+      button.btn.btn-link(ng-click="isCollapsed = !isCollapsed" role="button") <small>Von</small> {{startTime | date:"dd.MM.yy HH:mm" }} <small>bis</small> {{endTime | date:"dd.MM.yy HH:mm" }}
+  .well(uib-collapse="isCollapsed")
+    .row
+      .col-sm-2
+        p.form-group
+          label Von:
+          input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="startTime")
+      .col-sm-2
+        #startTimePicker(uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+      .col-sm-2
+        p.form-group
+          label Bis:
+          input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="endTime")
+      .col-sm-2
+        #EndTimePicker(uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+      .col-sm-4
+        button.btn.btn-default(type="button" ng-click="setEarly()") Fr&uuml;h
+        button.btn.btn-default(type="button" ng-click="setLate()") Sp&auml;t
+        button.btn.btn-default(type="button" ng-click="setNight()") Nacht
+    .row
+      button.btn.btn-lg.btn-primary(type="button" ng-click="updateTimes()") Update
