@@ -8,11 +8,10 @@ html(lang="de")
     link(rel="stylesheet" href="/css/master.css")
     title= title
   body
-    div.container-fluid
-      navigation
+    navigation
 
-      #main.container
-        section(ng-view)
+    #main.container-fluid
+      section(ng-view)
 
 
     script(type="text/javascript" src="/lib/angular/angular.min.js")
