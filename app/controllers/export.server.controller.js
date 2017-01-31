@@ -4,7 +4,7 @@ var cosmino = require('../models/cosmino.server.model.js');
 exports.list = function(req, res) {
   cosmino.Export()
     .query(function(qb) {
-      qb.select('sid', 'datum', 'artikelcode', 'skidseite', 'lackierposition', 'skid')
+      qb.select('*')
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
     .fetchAll()
