@@ -1,24 +1,64 @@
-div(ng-controller="TimepickerCtrl")
-  .row
-    .col-sm-4
-      button.btn.btn-link(ng-click="isCollapsed = !isCollapsed" role="button") <small>Von</small> {{startTime | date:"dd.MM.yy HH:mm" }} <small>bis</small> {{endTime | date:"dd.MM.yy HH:mm" }}
-  .well(uib-collapse="isCollapsed")
+div(ng-controller="AnalysisCtrl")
+  div(ng-controller="TimepickerCtrl")
     .row
-      .col-sm-2
-        p.form-group
-          label Von:
-          input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="startTime")
-      .col-sm-2
-        #startTimePicker(uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
-      .col-sm-2
-        p.form-group
-          label Bis:
-          input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="endTime")
-      .col-sm-2
-        #EndTimePicker(uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
       .col-sm-4
-        button.btn.btn-default(type="button" ng-click="setEarly()") Fr&uuml;h
-        button.btn.btn-default(type="button" ng-click="setLate()") Sp&auml;t
-        button.btn.btn-default(type="button" ng-click="setNight()") Nacht
-    .row
-      button.btn.btn-lg.btn-primary(type="button" ng-click="updateTimes()") Update
+        button.btn.btn-link(ng-click="isCollapsed = !isCollapsed" role="button") <small>Von</small> {{startTime | date:"dd.MM.yy HH:mm" }} <small>bis</small> {{endTime | date:"dd.MM.yy HH:mm" }}
+      .col-sm-1
+        button.btn(ng-click="updateTimes()")
+          span.glyphicon.glyphicon-refresh
+    .well(uib-collapse="isCollapsed")
+      .row
+        .col-sm-2
+          p.form-group
+            label Von:
+            input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="startTime")
+        .col-sm-2
+          #startTimePicker(uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+        .col-sm-2
+          p.form-group
+            label Bis:
+            input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="endTime")
+        .col-sm-2
+          #EndTimePicker(uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+        .col-sm-4
+          button.btn.btn-default(type="button" ng-click="setEarly()") Fr&uuml;h
+          button.btn.btn-default(type="button" ng-click="setLate()") Sp&auml;t
+          button.btn.btn-default(type="button" ng-click="setNight()") Nacht
+      .row
+        button.btn.btn-lg.btn-primary(type="button" ng-click="updateTimes()") Update
+
+  .row
+    .col-md-8.col-md-offset-2
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th SID
+            th Auslauf
+            th Buchung
+            th Artikelcode
+            th Farbcode
+            th Typcode
+            th Skid
+            th Skidseite
+            th Position
+            th Verwendung
+            th Basis
+            th Fehler Art
+            th Fehler Ort
+            th Fahrweg
+        tbody
+          tr(data-ng-repeat="pos in export")
+            td(data-ng-bind="pos.sid")
+            td(data-ng-bind="pos.auslaufzeit")
+            td(data-ng-bind="pos.datum")
+            td(data-ng-bind="pos.artikelcode")
+            td(data-ng-bind="pos.farbcode")
+            td(data-ng-bind="pos.typcode")
+            td(data-ng-bind="pos.skid")
+            td(data-ng-bind="pos.skidseite")
+            td(data-ng-bind="pos.lackierposition")
+            td(data-ng-bind="pos.verwendung")
+            td(data-ng-bind="pos.basis")
+            td(data-ng-bind="pos.fehlerart_code")
+            td(data-ng-bind="pos.fehlerort_code")
+            td(data-ng-bind="pos.fahrweg")
