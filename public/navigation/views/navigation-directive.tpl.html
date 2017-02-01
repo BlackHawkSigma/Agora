@@ -1,17 +1,22 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-ng-click="showMobileNav = !showMobileNav">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">Paintshop 5 App</a>
-  </div>
-  <div class="collapse navbar-collapse" data-ng-class="{in: showMobileNav}">
-    <ul class="nav navbar-nav">
-      <li data-ng-repeat="route in routes" data-ng-class="{active: activeRoute(route)}">
-        <a ng-href="{{'#!' + route.path }}">{{ route.name }}</a>
-      </li>
-    </ul>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-ng-controller="NavCtrl">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-ng-click="showMobileNav = !showMobileNav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Paintshop 5 App</a>
+    </div>
+    <div class="collapse navbar-collapse" data-ng-class="{in: showMobileNav}">
+      <ul class="nav navbar-nav">
+        <li data-ng-repeat="route in routes" data-ng-class="{active: activeRoute(route)}">
+          <a ng-href="{{'#!' + route.path }}">{{ route.name }}</a>
+        </li>
+      </ul>
+      <p class="navbar-text navbar-right">
+        {{ nowUnix }} <span class="glyphicon glyphicon-console"></span>
+      </p>
+    </div>
   </div>
 </nav>
