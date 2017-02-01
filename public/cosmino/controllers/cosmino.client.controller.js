@@ -1,6 +1,6 @@
-angular.module('cosmino').controller('TimepickerCtrl',['$scope', 'uibDateParser', 'Export',
-function ($scope, uibDateParser, Export) {
-  $scope.dateFormat = 'dd.MM.yy HH:mm'
+angular.module('cosmino').controller('TimepickerCtrl',['$scope', '$interval', 'uibDateParser', 'Export',
+function ($scope, $interval, uibDateParser, Export) {
+  $scope.dateFormat = 'dd.MM.yy HH:mm';
 
   $scope.isCollapsed = true;
 
@@ -31,11 +31,18 @@ function ($scope, uibDateParser, Export) {
   };
   $scope.updateTimes = function() {
     $scope.isCollapsed = true;
-    var startTime = new Date($scope.startTime).toISOString();
-    var endTime = new Date($scope.endTime).toISOString();
+    var startTime = Date.parse($scope.startTime) / 1000;
+    var endTime = Date.parse($scope.endTime) / 1000;
     $scope.$parent.export = Export.query({
       startTime,
       endTime
     });
-  }
+  };
+
+  // $interval promise
+  stopUpdate = $interval($scope.updateTimes, 60000);
+
+  $scope.$on('$destroy', function() {
+    $interval.cancel(stopUpdate);
+  });
 }]);
