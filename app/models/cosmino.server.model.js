@@ -1,6 +1,4 @@
-var bookshelf = require('../../config/bookshelf.js');
-
-bookshelf.plugin('virtuals');
+var bookshelf = require('../../config/bookshelf.js')();
 
 exports.Artikel = function() {
   return bookshelf.Model.extend({
