@@ -7,7 +7,16 @@ exports.list = function(req, res) {
       qb.select('*')
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
-    .fetchAll()
+    .fetchAll({
+      withRelated: ['fehlerart', 'fehlerort']
+    })
+    .then(function(result) {
+    res.json(result);
+  }).catch(function(err) {
+    console.error(err);
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+};
     .then(function(result) {
     res.json(result);
   }).catch(function(err) {

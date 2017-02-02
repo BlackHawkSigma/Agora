@@ -43,14 +43,14 @@ div(ng-controller="AnalysisCtrl")
             th Position
             th Verwendung
             th Basis
-            th Fehler Art
+            th Fehler
             th Fehler Ort
             th Fahrweg
         tbody
           tr(data-ng-repeat="pos in export")
             td(data-ng-bind="pos.sid")
-            td(data-ng-bind="pos.auslaufzeit")
-            td(data-ng-bind="pos.datum")
+            td(data-ng-bind="pos.auslaufzeit | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="pos.datum | date:'dd.MM.yy HH:mm'")
             td(data-ng-bind="pos.artikelcode")
             td(data-ng-bind="pos.farbcode")
             td(data-ng-bind="pos.typcode")
@@ -59,6 +59,6 @@ div(ng-controller="AnalysisCtrl")
             td(data-ng-bind="pos.lackierposition")
             td(data-ng-bind="pos.verwendung")
             td(data-ng-bind="pos.basis")
-            td(data-ng-bind="pos.fehlerart_code")
-            td(data-ng-bind="pos.fehlerort_code")
+            td(data-ng-bind="pos.fehlerart.fehlerart_text")
+            td(data-ng-bind="pos.fehlerort.fehlerort_text")
             td(data-ng-bind="pos.fahrweg")
