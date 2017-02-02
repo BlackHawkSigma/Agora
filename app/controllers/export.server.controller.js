@@ -17,6 +17,17 @@ exports.list = function(req, res) {
     res.status(500).json({error: true, data: {message: err.message}});
   });
 };
+
+exports.listRejections = function(req, res) {
+  cosmino.Rejections()
+    .query(function(qb) {
+      qb.select('*')
+      .where('datum', '>', '2017-01-01 06:00:00')
+    })
+    .fetchAll({
+      withRelated: ['artikel'],
+      shallow: true
+    })
     .then(function(result) {
     res.json(result);
   }).catch(function(err) {
