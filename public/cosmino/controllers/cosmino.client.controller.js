@@ -31,8 +31,8 @@ function ($scope, $interval, uibDateParser, Export) {
   };
   $scope.updateTimes = function() {
     $scope.isCollapsed = true;
-    var startTime = Date.parse(new Date($scope.startTime)) / 1000 | 0;
-    var endTime = Date.parse(new Date($scope.endTime)) / 1000 | 0;
+    var startTime = new Date(Date.parse(new Date($scope.startTime)) + 3600000);
+    var endTime = new Date(Date.parse(new Date($scope.endTime)) + 3600000);
     $scope.$parent.export = Export.query({
       startTime,
       endTime
