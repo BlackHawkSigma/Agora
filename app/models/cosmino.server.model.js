@@ -25,10 +25,18 @@ var Export = bookshelf.Model.extend({
   tableName: "lack5_export",
   virtuals: {
     farbcode: function() {
-      return this.get('artikelcode').toString().slice(-3);
+      if (this.get('artikelcode') != undefined) {
+        return this.get('artikelcode').toString().slice(-3);
+      } else {
+        return null;
+      }
     },
     typcode: function() {
-      return this.get('artikelcode').toString().slice(1, -3);
+      if (this.get('artikelcode') != undefined) {
+        return this.get('artikelcode').toString().slice(1, -3);
+      } else {
+        return null;
+      }
     },
     verwendung: function() {
       if (this.get('io_notouch') == 1 ) {
