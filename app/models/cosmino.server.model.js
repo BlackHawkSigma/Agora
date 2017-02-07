@@ -1,4 +1,5 @@
 var bookshelf = require('../../config/bookshelf.js')();
+var codes = require('../../config/global/const.js');
 
 var Artikel = bookshelf.Model.extend({
   tableName: "artikel"
