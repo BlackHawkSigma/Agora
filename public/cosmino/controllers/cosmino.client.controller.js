@@ -40,7 +40,7 @@ function ($scope, $interval, uibDateParser, Export) {
   };
 
   // $interval promise
-  stopUpdate = $interval($scope.updateTimes, 60000);
+  stopUpdate = $interval($scope.updateTimes, 300000);
 
   $scope.$on('$destroy', function() {
     $interval.cancel(stopUpdate);
