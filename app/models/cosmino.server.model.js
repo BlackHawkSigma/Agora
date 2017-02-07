@@ -115,8 +115,16 @@ exports.VersuchsObjekte = function() {
 
 var Rejections = bookshelf.Model.extend({
   tableName: "nachkontrolle",
+  virtuals: {
+    verwendung: function() {
+      return codes.rejections.decisionCodes[this.get('bewertung') - 1];
+    }
+  },
   artikel: function() {
     return this.belongsTo(Export, 'barcode', 'barcode');
+  },
+  fehlerart: function() {
+    return this.hasOne(FehlerArt, 'fehlerart_code', 'fehlerart_code');
   }
 });
 exports.Rejections = function() {

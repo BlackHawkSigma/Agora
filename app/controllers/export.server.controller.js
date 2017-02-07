@@ -28,7 +28,7 @@ exports.listRejections = function(req, res) {
       }
     })
     .fetchAll({
-      withRelated: ['artikel']
+      withRelated: ['artikel', 'fehlerart']
     })
     .then(function(result) {
       if (req.query.artikel != undefined) {

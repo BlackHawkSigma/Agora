@@ -1,0 +1,136 @@
+section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
+  h1.page-header R&uuml;ckweisungen
+  h2(data-ng-bind="artikel")
+  h3 von: {{ startTime | date:'dd.MM.yy' }}
+
+  #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
+
+  .row
+    .well
+      p(ng-bind="summery")
+
+  .row
+    .col-xs-8.col-lg-offset-2
+      form.form-inline
+        .form-group
+          label.sr-only(for="searchDecision") Verwendung
+          .input-group#searchDecision
+            .input-group-addon: i.glyphicon.glyphicon-search
+            input.form-control(type="text" data-ng-model="search.verwendung" placeholder="Verwendung")
+        .form-group
+          label.sr-only(for="searchDefect") Fehler
+          .input-group#searchDefect
+            .input-group-addon: i.glyphicon.glyphicon-search
+            input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" placeholder="Fehler")
+        .form-group
+          label.sr-only(for="searchArticle") Artikel
+          .input-group#searchArticle
+            .input-group-addon: i.glyphicon.glyphicon-search
+            input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" placeholder="Artikel")
+
+  .row
+    .col-lg-10.col-lg-offset-1.col-xs-12
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th Barcode
+            th Datum
+            th Verwendung
+            th Fehlercode
+            th Personalnummer
+            th Fehler
+            th Auslauf
+            th Artikel
+            th poliert
+            th noTouch
+        tbody
+          tr(data-ng-repeat="item in rejections | filter:search")
+            td(data-ng-bind="item.barcode")
+            td(data-ng-bind="item.datum | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="item.verwendung")
+            td(data-ng-bind="item.fehlerart_code")
+            td(data-ng-bind="item.artikel.personalnummer")
+            td(data-ng-bind="item.fehlerart.fehlerart_text")
+            td(data-ng-bind="item.artikel.datum | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="item.artikel.artikelbezeichnung")
+            td(data-ng-bind="item.artikel.io_poliert")
+            td(data-ng-bind="item.artikel.io_notouch")
+
+//
+  {
+    "id":10062,
+    "datum":"2017-02-06T14:44:20.000Z",
+    "barcode":"307324520",
+    "fehlerart_code":4237,
+    "bewertung":3,
+    "personalnummer":null,
+    "fehlerort_code":52,
+    "artikel":{
+      "sid":8611486,
+      "datum":"2017-02-06T10:19:41.000Z",
+      "uhrzeit":"11:19:41",
+      "artikelcode":7180630000378,
+      "artikelbezeichnung":"Tiguan 326 Abdeckung hi. NWB Indium",
+      "farbton":"Indiumgrau R7H",
+      "skidseite":2,
+      "lackierposition":10,
+      "io_notouch":1,
+      "io_poliert":null,
+      "nacharbeit":null,
+      "ausschuss":null,
+      "fehlerart_code":null,
+      "fehlerort_code":null,
+      "personalnummer":"01016608",
+      "skid":312,
+      "barcode":"307324520",
+      "artikelart":"0",
+      "auslaufzeit":"2017-02-06T10:18:13.000Z",
+      "Fahrweg":340,
+      "farbcode":"378",
+      "typcode":"180630000",
+      "verwendung":"OK",
+      "fahrweg":"Normal",
+      "basis":"Rohteil"
+    }
+  }
+
+  {
+    "id":10083,
+    "datum":"2017-02-07T00:37:08.000Z",
+    "barcode":"307324072",
+    "fehlerart_code":4224,
+    "bewertung":4,
+    "personalnummer":null,
+    "fehlerort_code":42,
+    "fehlerart":{
+      "fehlerart_code":4224,
+      "fehlerart_text":"Einschluss Basislack"
+      },
+    "artikel":{
+      "sid":8611365,
+      "datum":"2017-02-06T09:58:53.000Z",
+      "uhrzeit":"10:58:53",
+      "artikelcode":7180260000378,
+      "artikelbezeichnung":"Tiguan 326 Abdeckung vo.Indiumgrau",
+      "farbton":"Indiumgrau R7H",
+      "skidseite":1,
+      "lackierposition":3,
+      "io_notouch":1,
+      "io_poliert":null,
+      "nacharbeit":null,
+      "ausschuss":null,
+      "fehlerart_code":null,
+      "fehlerort_code":null,
+      "personalnummer":"01016312",
+      "skid":51,
+      "barcode":"307324072",
+      "artikelart":"0",
+      "auslaufzeit":"2017-02-06T09:56:42.000Z",
+      "Fahrweg":340,
+      "farbcode":"378",
+      "typcode":"180260000",
+      "verwendung":"OK",
+      "fahrweg":"Normal",
+      "basis":"Rohteil"
+      }
+    }
