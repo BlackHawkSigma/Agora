@@ -1,32 +1,42 @@
 section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
   h1.page-header R&uuml;ckweisungen
   h2(data-ng-bind="artikel")
-  h3 von: {{ startTime | date:'dd.MM.yy' }}
+  h3 <small>von: </small>{{ startTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ endTime | date: "dd.MM.yy HH:mm" }}
 
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
 
-  .row
-    .well
-      p(ng-bind="summery")
+  .well
+    .row
+      .col-md-3
+        p Summe nach Fehler
+        pre {{ defectsSummary | json:4 }}
+      .col-md-3
+        p Summe nach Artikel
+        pre {{ articlesSummary | json:4 }}
 
   .row
-    .col-xs-8.col-lg-offset-2
-      form.form-inline
-        .form-group
-          label.sr-only(for="searchDecision") Verwendung
-          .input-group#searchDecision
-            .input-group-addon: i.glyphicon.glyphicon-search
-            input.form-control(type="text" data-ng-model="search.verwendung" placeholder="Verwendung")
-        .form-group
-          label.sr-only(for="searchDefect") Fehler
-          .input-group#searchDefect
-            .input-group-addon: i.glyphicon.glyphicon-search
-            input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" placeholder="Fehler")
-        .form-group
-          label.sr-only(for="searchArticle") Artikel
-          .input-group#searchArticle
-            .input-group-addon: i.glyphicon.glyphicon-search
-            input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" placeholder="Artikel")
+    .col-md-4.col-lg-3.col-lg-offset-1
+      .form-group
+        label.sr-only(for="searchDecision") Verwendung
+        .input-group#searchDecision
+          .input-group-addon: i.glyphicon.glyphicon-search
+          input.form-control(type="text" data-ng-model="search.verwendung" placeholder="Verwendung")
+    .col-md-4.col-lg-3
+      .form-group
+        label.sr-only(for="searchDefect") Fehler
+        .input-group#searchDefect
+          .input-group-addon: i.glyphicon.glyphicon-search
+          input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" uib-typeahead="defect for defect in defectSelection | filter:$viewValue" placeholder="Fehler")
+          span.input-group-btn
+            button.btn.btn-default(type="button" data-ng-click="clearDefect()"): i.glyphicon.glyphicon-remove
+    .col-md-4.col-lg-3
+      .form-group
+        label.sr-only(for="searchArticle") Artikel
+        .input-group#searchArticle
+          .input-group-addon: i.glyphicon.glyphicon-search
+          input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" uib-typeahead="item for item in articleSelection | filter:$viewValue" placeholder="Artikel")
+          span.input-group-btn
+            button.btn.btn-default(type="button" data-ng-click="clearArticle()"): i.glyphicon.glyphicon-remove
 
   .row
     .col-lg-10.col-lg-offset-1.col-xs-12
