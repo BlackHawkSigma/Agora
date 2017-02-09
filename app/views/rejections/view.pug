@@ -1,9 +1,14 @@
 section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
-  h1.page-header R&uuml;ckweisungen
-  h2(data-ng-bind="artikel")
-  h3 <small>von: </small>{{ startTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ endTime | date: "dd.MM.yy HH:mm" }}
-
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
+
+  h3 <small>von: </small>{{ startTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ endTime | date: "dd.MM.yy HH:mm" }}    <small>von: </small>{{ setStartTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ setEndTime | date: "dd.MM.yy HH:mm" }}
+  hr
+
+  form.form-inline
+    .form-group
+      input.form-control(type="text" placeholder="von" data-ng-model="setStartTime")
+    .form-group
+      input.form-control(type="text" placeholder="bis" data-ng-model="setEndTime")
 
   .well
     .row
