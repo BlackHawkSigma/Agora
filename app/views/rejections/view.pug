@@ -15,8 +15,11 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
             botton.btn.btn-primary(ng-print print-element-id="defectsChart"): i.glyphicon.glyphicon-print  Drucken
         pre {{ defectsSummary | json:4 }}
       .col-md-6
-        p Summe nach Artikel
-        botton.btn.btn-primary(ng-print print-element-id="articlesChart"): i.glyphicon.glyphicon-print  Drucken
+        .row
+          .col-xs-6
+            p Summe nach Artikel
+          .col-xs-6
+            botton.btn.btn-primary(ng-print print-element-id="articlesChart"): i.glyphicon.glyphicon-print  Drucken
         pre {{ articlesSummary | json:4 }}
     .row
       .col-md-6
