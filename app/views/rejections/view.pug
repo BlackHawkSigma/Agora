@@ -8,16 +8,21 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
   .well
     .row
       .col-md-6
-        p Summe nach Fehler
+        .row
+          .col-xs-6
+            p Summe nach Fehler
+          .col-xs-6
+            botton.btn.btn-primary(ng-print print-element-id="defectsChart"): i.glyphicon.glyphicon-print  Drucken
         pre {{ defectsSummary | json:4 }}
       .col-md-6
         p Summe nach Artikel
+        botton.btn.btn-primary(ng-print print-element-id="articlesChart"): i.glyphicon.glyphicon-print  Drucken
         pre {{ articlesSummary | json:4 }}
     .row
       .col-md-6
-        canvas#defectBar.chart.chart-bar(chart-data="defectBarData" chart-labels="defectBarLabels")
+        canvas#defectsChart.chart.chart-bar(chart-data="defectBarData" chart-labels="defectBarLabels")
       .col-md-6
-        canvas#articleBar.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels")
+        canvas#articlesChart.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels")
 
   .row
     .col-md-4.col-lg-3.col-lg-offset-1

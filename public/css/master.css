@@ -1,3 +1,22 @@
-body {
-  padding-top: 55px;
+@media screen {
+  body {
+    padding-top: 55px;
+  }
+  #printSection {
+    display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printSection, #printSection * {
+    visibility: visible;
+  }
+  #printSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
