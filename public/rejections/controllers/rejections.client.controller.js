@@ -18,8 +18,8 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     }
 
     $scope.artikel = null;
-    $scope.startTime = '2017-02-08';
-    $scope.endTime = _.now();
+    $scope.startTime = moment().startOf('hour').set('hour', 6).subtract(1, 'days').toISOString();
+    $scope.endTime = moment().startOf('minute').toISOString();
 
     // For future use...
     // $scope.articleSelection = _.keys(articleList);
