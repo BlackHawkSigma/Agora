@@ -63,6 +63,13 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
             })
             .value();
 
+          // Charts
+          $scope.defectBarLabels = _.keys($scope.defectsSummary);
+          $scope.defectBarData = _.values($scope.defectsSummary);
+
+          $scope.articleBarLabels = _.keys($scope.articlesSummary);
+          $scope.articleBarData = _.values($scope.articlesSummary);
+
           }, function(err) {
             $scope.err = err;
             });

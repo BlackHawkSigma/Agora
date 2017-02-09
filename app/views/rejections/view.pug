@@ -7,12 +7,17 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
 
   .well
     .row
-      .col-md-3
+      .col-md-6
         p Summe nach Fehler
         pre {{ defectsSummary | json:4 }}
-      .col-md-3
+      .col-md-6
         p Summe nach Artikel
         pre {{ articlesSummary | json:4 }}
+    .row
+      .col-md-6
+        canvas#defectBar.chart.chart-bar(chart-data="defectBarData" chart-labels="defectBarLabels")
+      .col-md-6
+        canvas#articleBar.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels")
 
   .row
     .col-md-4.col-lg-3.col-lg-offset-1
