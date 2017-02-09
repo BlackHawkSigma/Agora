@@ -48,28 +48,24 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
       table.table.table-hover.table-condensed
         thead
           tr
-            th Barcode
             th Datum
-            th Verwendung
-            th Fehlercode
-            th Personalnummer
-            th Fehler
-            th Auslauf
             th Artikel
-            th poliert
-            th noTouch
+            th Fehler
+            th 2. Verwendung
+            th Auslauf
+            th 1. Verwendung
+            th Personalnummer
+            th Barcode
         tbody
           tr(data-ng-repeat="item in rejections | filter:search")
-            td(data-ng-bind="item.barcode")
             td(data-ng-bind="item.datum | date:'dd.MM.yy HH:mm'")
-            td(data-ng-bind="item.verwendung")
-            td(data-ng-bind="item.fehlerart_code")
-            td(data-ng-bind="item.artikel.personalnummer")
-            td(data-ng-bind="item.fehlerart.fehlerart_text")
-            td(data-ng-bind="item.artikel.datum | date:'dd.MM.yy HH:mm'")
             td(data-ng-bind="item.artikel.artikelbezeichnung")
-            td(data-ng-bind="item.artikel.io_poliert")
-            td(data-ng-bind="item.artikel.io_notouch")
+            td(data-ng-bind="item.fehlerart.fehlerart_text")
+            td(data-ng-bind="item.verwendung")
+            td(data-ng-bind="item.artikel.datum | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="item.artikel.verwendung")
+            td(data-ng-bind="item.artikel.personalnummer")
+            td(data-ng-bind="item.barcode")
 
 //
   {
