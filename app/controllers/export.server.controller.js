@@ -2,6 +2,15 @@ var bookshelf = require('../../config/bookshelf.js');
 var cosmino = require('../models/cosmino.server.model.js');
 var _ = require('lodash');
 
+function limitOutput(data, filterArray) {
+  var resultArray = [];
+  var dummy = _.each(data.toJSON(), function(input) {
+    var selection = _.pick(input, filterArray);
+    resultArray.push(selection);
+  });
+  return resultArray;
+};
+
 exports.list = function(req, res) {
   cosmino.Export()
     .query(function(qb) {
@@ -37,7 +46,17 @@ exports.listRejections = function(req, res) {
         });
         res.send(data);
       } else {
-        res.json(result);
+        res.json(limitOutput(result, [
+          'datum',
+          'artikel.artikelbezeichnung',
+          'fehlerart.fehlerart_text',
+          'verwendung',
+          'artikel.datum',
+          'artikel.verwendung',
+          'artikel.personalnummer',
+          'artikel.typcode',
+          'barcode'
+        ]));
       }
   }).catch(function(err) {
     console.error(err);
