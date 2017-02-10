@@ -18,8 +18,12 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     }
 
     $scope.artikel = null;
-    $scope.startTime = moment().startOf('hour').set('hour', 6).subtract(1, 'days').toISOString();
-    $scope.endTime = moment().startOf('minute').toISOString();
+    // Time init
+    var endTime = moment().startOf('hour').set('hour', 6).toISOString();
+    var startTime = moment(endTime).subtract(1, 'days').toISOString();
+
+    $scope.startTimeInput = new Date(startTime);
+    $scope.endTimeInput = new Date(endTime);
 
     // For future use...
     // $scope.articleSelection = _.keys(articleList);
@@ -31,12 +35,20 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     ];
 
     $scope.find = function() {
+      var startTimeQuery = moment($scope.startTimeInput).format('YYYY-MM-DD HH:mm:ss');
+      var endTimeQuery = moment($scope.endTimeInput).format('YYYY-MM-DD HH:mm:ss');
+
       Rejections.query({
         'artikel': $scope.artikel,
-        'startTime': $scope.startTime
+        'startTime': startTimeQuery,
+        'endTime': endTimeQuery
       }, function(data) {
           // Show all datasets
           $scope.rejections = data;
+
+          // Refresh displayed dates
+          $scope.startTimeDisplay = new Date(startTimeQuery);
+          $scope.endTimeDisplay = new Date(endTimeQuery);
 
           // Fill array with all defects
           defectList = _.flatMap(data, function(item) {

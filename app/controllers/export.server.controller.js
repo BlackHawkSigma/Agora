@@ -33,7 +33,7 @@ exports.listRejections = function(req, res) {
     .query(function(qb) {
       qb.select('*');
       if (req.query.startTime != undefined) {
-        qb.where('datum', '>=', req.query.startTime);
+        qb.whereBetween('datum', [req.query.startTime, req.query.endTime]);
       }
     })
     .fetchAll({
