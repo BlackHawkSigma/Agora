@@ -47,7 +47,7 @@ div(ng-controller="AnalysisCtrl")
             th Fehler Ort
             th Fahrweg
         tbody
-          tr(data-ng-repeat="pos in ::export" data-ng-class="{warning : pos.basis == 'NA'}")
+          tr(data-ng-repeat="pos in export" data-ng-class="{success : pos.verwendung == 'OK poliert', warning : pos.verwendung == 'NA', danger : pos.verwendung == 'Ausschuss', info : pos.verwendung == 'n/a'}")
             td(data-ng-bind="pos.sid")
             td(data-ng-bind="pos.auslaufzeit | date:'dd.MM.yy HH:mm'")
             td(data-ng-bind="pos.datum | date:'dd.MM.yy HH:mm'")
