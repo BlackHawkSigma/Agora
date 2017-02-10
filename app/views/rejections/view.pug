@@ -77,7 +77,7 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
             th Personalnummer
             th Barcode
         tbody
-          tr(uib-pagination data-ng-repeat="item in ::rejections | filter:search")
+          tr(data-ng-repeat="item in rejections | filter:search")
             td(data-ng-bind="item.datum | date:'dd.MM.yy HH:mm'")
             td(data-ng-bind="item.artikel.artikelbezeichnung")
             td(data-ng-bind="item.fehlerart.fehlerart_text")
