@@ -1,14 +1,18 @@
 section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
 
-  h3 <small>von: </small>{{ startTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ endTime | date: "dd.MM.yy HH:mm" }}    <small>von: </small>{{ setStartTime | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ setEndTime | date: "dd.MM.yy HH:mm" }}
+  h3 <small>von: </small>{{ startTimeDisplay | date: "dd.MM.yy HH:mm" }} <small>bis: </small>{{ endTimeDisplay | date: "dd.MM.yy HH:mm" }}
   hr
 
   form.form-inline
     .form-group
-      input.form-control(type="text" placeholder="von" data-ng-model="setStartTime")
+      input.form-control(type="datetime-local" placeholder="von" data-ng-model="startTimeInput")
     .form-group
-      input.form-control(type="text" placeholder="bis" data-ng-model="setEndTime")
+      input.form-control(type="datetime-local" placeholder="bis" data-ng-model="endTimeInput")
+    .form-group
+      button.btn.btn-danger(ng-click="find()") Update
+    .form-group
+      button.btn.btn-success(ng-click="updateCharts()") Charts
 
   .well
     .row
@@ -17,48 +21,51 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
           .col-xs-6
             p Summe nach Fehler
           .col-xs-6
-            botton.btn.btn-primary(ng-print print-element-id="defectsChart"): i.glyphicon.glyphicon-print  Drucken
-        pre {{ defectsSummary | json:4 }}
+            botton.btn.btn-primary(ng-print print-element-id="defectsChart" disabled="disabled"): i.glyphicon.glyphicon-print  Drucken
+        // pre {{ defectsSummary | json:4 }}
       .col-md-6
         .row
           .col-xs-6
             p Summe nach Artikel
           .col-xs-6
-            botton.btn.btn-primary(ng-print print-element-id="articlesChart"): i.glyphicon.glyphicon-print  Drucken
-        pre {{ articlesSummary | json:4 }}
+            botton.btn.btn-primary(ng-print print-element-id="articlesChart" disabled="disabled"): i.glyphicon.glyphicon-print  Drucken
+        // pre {{ articlesSummary | json:4 }}
     .row
       .col-md-6
-        canvas#defectsChart.chart.chart-bar(chart-data="defectBarData" chart-labels="defectBarLabels")
+        canvas#defectsChart.chart.chart-bar(chart-data="defectBarData" chart-labels="defectBarLabels" chart-options="defectBarOptions")
       .col-md-6
-        canvas#articlesChart.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels")
+        canvas#articlesChart.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels" chart-options="articleBarOptions")
 
   .row
-    .col-md-4.col-lg-3.col-lg-offset-1
-      .form-group
-        label.sr-only(for="searchDecision") Verwendung
-        .input-group#searchDecision
-          .input-group-addon: i.glyphicon.glyphicon-search
-          input.form-control(type="text" data-ng-model="search.verwendung" placeholder="Verwendung")
-    .col-md-4.col-lg-3
-      .form-group
-        label.sr-only(for="searchDefect") Fehler
-        .input-group#searchDefect
-          .input-group-addon: i.glyphicon.glyphicon-search
-          input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" uib-typeahead="defect for defect in defectSelection | filter:$viewValue" placeholder="Fehler")
-          span.input-group-btn
-            button.btn.btn-default(type="button" data-ng-click="clearDefect()"): i.glyphicon.glyphicon-remove
     .col-md-4.col-lg-3
       .form-group
         label.sr-only(for="searchArticle") Artikel
         .input-group#searchArticle
           .input-group-addon: i.glyphicon.glyphicon-search
-          input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" uib-typeahead="item for item in articleSelection | filter:$viewValue" placeholder="Artikel")
+          input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" data-ng-change="updateCharts()" uib-typeahead="item for item in articleSelection | filter:$viewValue" placeholder="Artikel")
           span.input-group-btn
             button.btn.btn-default(type="button" data-ng-click="clearArticle()"): i.glyphicon.glyphicon-remove
+    .col-md-4.col-lg-3
+      .form-group
+        label.sr-only(for="searchDefect") Fehler
+        .input-group#searchDefect
+          .input-group-addon: i.glyphicon.glyphicon-search
+          input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" data-ng-change="updateCharts()" uib-typeahead="defect for defect in defectSelection | filter:$viewValue" placeholder="Fehler")
+          span.input-group-btn
+            button.btn.btn-default(type="button" data-ng-click="clearDefect()"): i.glyphicon.glyphicon-remove
+    .col-md-4.col-lg-3.col-lg-offset-1
+      .form-group
+        label.sr-only(for="searchDecision") Verwendung
+        .input-group#searchDecision
+          .input-group-addon: i.glyphicon.glyphicon-search
+          input.form-control(type="text" data-ng-model="search.verwendung" data-ng-change="updateCharts()" placeholder="Verwendung")
+
 
   .row
+    botton.btn.btn-primary(ng-print print-element-id="rejectionstable"): i.glyphicon.glyphicon-print  Drucken
+  .row
     .col-lg-10.col-lg-offset-1.col-xs-12
-      table.table.table-hover.table-condensed
+      table#rejectionstable.table.table-hover.table-condensed
         thead
           tr
             th Datum
