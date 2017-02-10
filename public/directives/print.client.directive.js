@@ -10,6 +10,8 @@ angular.module('paintlineApp').directive('ngPrint', [function() {
 
   function link(scope, element, attrs) {
     element.on('click', function() {
+      // Clear print section
+      printSection.innerHTML = '';
       var elementToPrint = document.getElementById(attrs.printElementId);
       if (elementToPrint) {
         printElement(elementToPrint);
