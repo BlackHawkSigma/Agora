@@ -33,9 +33,29 @@ function ($scope, $interval, uibDateParser, Export) {
     $scope.isCollapsed = true;
     var startTime = new Date(Date.parse(new Date($scope.startTime)) + 3600000);
     var endTime = new Date(Date.parse(new Date($scope.endTime)) + 3600000);
-    $scope.$parent.export = Export.query({
+    Export.query({
       'startTime': startTime,
       'endTime': endTime
+    }, function(data) {
+      $scope.$parent.export = data;
+      var summary = _
+        .chain(data)
+        .flatMap(function(item) {
+          return item.verwendung;
+        })
+        .countBy()
+        .value();
+
+      $scope.$parent.summary = summary
+
+      var sum = _
+        .chain(summary)
+        .values()
+        .sum()
+        .value();
+
+      $scope.$parent.frq = _.round(summary.OK / sum * 100, 2);
+      $scope.$parent.scrap = _.round(summary.Ausschuss / sum * 100, 2);
     });
   };
 
