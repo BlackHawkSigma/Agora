@@ -4,14 +4,8 @@ function ($scope, $interval, uibDateParser, Export) {
 
   $scope.isCollapsed = true;
 
-  $scope.endTime = new Date().setSeconds(0);
-
-  $scope.startTime = (function() {
-    this.setDate(this.getDate()-1);
-    this.setMinutes(0);
-    this.setSeconds(0);
-    return this
-  }).call(new Date());
+  $scope.endTime = new Date(moment().startOf('hour').set('hour', 14).toISOString());
+  $scope.startTime = new Date(moment().startOf('hour').set('hour', 6).toISOString());
 
   $scope.hstep = 1;
   $scope.mstep = 15;
