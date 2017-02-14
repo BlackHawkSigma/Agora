@@ -1,8 +1,21 @@
 angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$interval', 'Dashboard',
   function($scope, $filter, $interval, Dashboard) {
     $scope.refresh = function() {
-      var startTimeQuery = moment().startOf('hour').set('hour', 6).format('YYYY-MM-DD HH:mm:ss');
-      var endTimeQuery = moment().endOf('hour').set('hour', 13).format('YYYY-MM-DD HH:mm:ss');
+      var hour = moment().get('hour');
+      var startHour = null;
+
+      if (hour >= 6 & hour < 14) {
+          startHour = 6;
+        } else {
+          if (hour >= 14 & hour < 22) {
+            startHour = 14;
+          } else {
+            startHour = 22;
+          }
+        }
+
+      var startTimeQuery = moment().startOf('hour').set('hour', startHour).format('YYYY-MM-DD HH:mm:ss');
+      var endTimeQuery = moment(startTimeQuery).add(7, 'hours').endOf('hour').format('YYYY-MM-DD HH:mm:ss');
 
       Dashboard.query({
         'startTime': startTimeQuery,
