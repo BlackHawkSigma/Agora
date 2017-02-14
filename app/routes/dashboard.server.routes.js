@@ -1,4 +1,5 @@
 module.exports = function(app) {
-  var view = require('../controllers/dashboard.server.controller.js');
-  app.get('/dashboard', view.render);
+  var dashboard = require('../controllers/dashboard.server.controller.js');
+  app.get('/dashboard', dashboard.render);
+  app.get('/api/dashboard', dashboard.list);
 }

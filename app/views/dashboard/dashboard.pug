@@ -1,23 +1,27 @@
-h1.page-header I'm a fancy dashboard
-.row
-  .col-md-4
-    .panel.panel-success
-      .panel-heading: h2 FRQ:
-      .panel-body
-        h3 [WIP]
-  .col-md-4
-    .panel.panel-info
-      .panel-heading: h2 FTT:
-      .panel-body
-        h3 [WIP]
-  .col-md-4
-    .panel.panel-danger
-      .panel-heading: h2 Scrap:
-      .panel-body
-        h3 [WIP]
-.row
-  .col-xs-12
-    .panel.panel-default
-      .panel-heading: h2 aktuelle Fehler
-      .panel-body
-        canvas#defectsChart.chart.chart-bar
+section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
+  // h1.page-header I'm a fancy dashboard [WIP]
+  #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
+  #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") Server offline
+  .row
+    .col-md-2.col-lg-1
+      .row
+        .panel.panel-success
+          .panel-heading: h2 FRQ:
+          .panel-body
+            h2 {{ frq | number: 2 }}%
+      .row
+        .panel.panel-info
+          .panel-heading: h2 FTT:
+          .panel-body
+            h2 {{ ftt | number: 2 }}%
+      .row
+        .panel.panel-danger
+          .panel-heading: h2 Scrap:
+          .panel-body
+            h2 {{ scrap | number: 2 }}%
+    .col-md-10.col-lg-11
+      .panel.panel-default
+        .panel-heading: h2 aktuelle Fehler
+        .panel-body
+          canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions")
+          // pre(ng-bind="defects | json ")
