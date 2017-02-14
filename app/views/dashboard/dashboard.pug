@@ -3,23 +3,33 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
   #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") Server offline
   .row
-    .col-md-2.col-lg-1
+    .col-md-2
       .row
-        .panel.panel-success
-          .panel-heading: h2 FRQ:
+        .panel.panel-default
+          .panel-heading: h3 FRQ: {{ frq | number: 2 }}%
           .panel-body
-            h2 {{ frq | number: 2 }}%
+            h4 {{ summary.OK + summary['OK poliert'] }} / {{ sumInclET }}
       .row
-        .panel.panel-info
-          .panel-heading: h2 FTT:
+        .panel.panel-default
+          .panel-heading: h3 FTT: {{ ftt | number: 2 }}%
           .panel-body
-            h2 {{ ftt | number: 2 }}%
+            h4 {{ summary.OK }} / {{ sumInclET }}
       .row
-        .panel.panel-danger
-          .panel-heading: h2 Scrap:
+        .panel.panel-default
+          .panel-heading: h3 Scrap: {{ scrap | number: 2 }}%
           .panel-body
-            h2 {{ scrap | number: 2 }}%
-    .col-md-10.col-lg-11
+            h4 {{ summary.Ausschuss }} / {{ sumInclET }}
+      .row
+        .panel.panel-default
+          .panel-heading: h3 RFT: {{ rft | number: 2 }}%
+          .panel-body
+            h4 {{ summary.OK }} / {{ sumExclET }}
+      .row
+        .panel.panel-default
+          .panel-heading: h3 Paint Scrap: {{ paintScrap | number: 2}}€
+          .panel-body
+            h3
+    .col-md-10
       .panel.panel-default
         .panel-heading: h2 aktuelle Fehler
         .panel-body

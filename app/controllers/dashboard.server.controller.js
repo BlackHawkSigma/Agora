@@ -18,7 +18,7 @@ exports.render = function(req, res) {
 exports.list = function(req, res) {
   cosmino.Export()
     .query(function(qb) {
-      qb.select(['sid', 'datum', 'fehlerart_code', 'io_notouch', 'io_poliert', 'nacharbeit', 'ausschuss'])
+      qb.select(['sid', 'datum', 'fehlerart_code', 'io_notouch', 'io_poliert', 'nacharbeit', 'ausschuss', 'Fahrweg'])
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
     .fetchAll({
@@ -28,7 +28,8 @@ exports.list = function(req, res) {
       res.json(limitOutput(result, [
         'datum',
         'fehlerart.fehlerart_text',
-        'verwendung'
+        'verwendung',
+        'fahrweg'
       ]));
   }).catch(function(err) {
     console.error(err);
