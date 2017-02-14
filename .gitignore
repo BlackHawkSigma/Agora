@@ -3,3 +3,4 @@ public/lib/
 *log
 config/env/development.js
 config/env/production.js
+config/global/employees.json
