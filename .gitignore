@@ -2,3 +2,4 @@ node_modules/
 public/lib/
 *log
 config/env/development.js
+config/env/production.js
