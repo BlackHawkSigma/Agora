@@ -28,11 +28,6 @@ div(ng-controller="AnalysisCtrl")
         button.btn.btn-lg.btn-primary(type="button" ng-click="updateTimes()") Update
 
   .row
-    .jumbotron
-      pre {{ summary | json }}
-      p FRQ [WIP]: {{ frq }}%
-      p Scrap [WIP]: {{ scrap }}%
-  .row
     .col-md-8.col-md-offset-2
       table.table.table-hover.table-condensed
         thead
