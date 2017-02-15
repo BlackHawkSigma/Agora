@@ -94,6 +94,11 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           return "".concat(value, ": ", data[index], "%");
         });
 
+        // Check for null values
+        summary.OK = (_.isNumber(summary.OK) ? summary.OK : 0 );
+        summary['OK poliert'] = (_.isNumber(summary['OK polliert']) ? summary['OK polliert'] : 0 );
+        summary.Ausschuss = (_.isNumber(summary.Ausschuss) ? summary.Ausschuss : 0 );
+
         $scope.summary = summary;
         $scope.rft = summary.OK / $scope.sumExclET * 100;
         $scope.ftt = summary.OK / $scope.sumInclET * 100;
