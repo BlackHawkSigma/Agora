@@ -3,7 +3,7 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
   #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") <b>Server offline</b> seit {{ lastUpdateHuman }}
   .row
-    .col-md-2
+    .col-sm-2
       .row
         .panel.panel-default(data-ng-class="{'panel-success' : frq >= 90, 'panel-danger' : frq < 90 }")
           .panel-heading: h3 FRQ: {{ frq | number: 2 }}%
@@ -29,9 +29,9 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
           .panel-heading: h3 Paint Scrap: {{ paintScrap | number: 2}}€
           .panel-body
             h3
-    .col-md-10
+    .col-sm-10
       .panel.panel-default
-        .panel-heading: h2 aktuelle Fehler
+        .panel-heading: h2 aktuelle Fehler (Ausschuss & Nacharbeit)
         .panel-body
           canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions")
           // pre(ng-bind="defects | json ")

@@ -53,6 +53,10 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         var defects = _
           .chain(response)
+          .filter({
+            'verwendung': 'NA',
+            'verwendung': 'Ausschuss'
+          })
           .flatMap(function(item) {
             if (_.has(item, 'fehlerart')) {
               return item.fehlerart.fehlerart_text;
@@ -83,9 +87,11 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .value();
 
         var labelsData = _.unzip(defects);
-        var labels = labelsData[0];
         var data = _.map(labelsData[1], function(n) {
-          return _.round(n / $scope.sumInclET *100, 2);
+          return _.round(n / $scope.sumInclET *100, 1);
+        });
+        var labels = _.map(labelsData[0], function(value, index) {
+          return "".concat(value, ": ", data[index], "%");
         });
 
         $scope.summary = summary;
@@ -108,15 +114,16 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       scales: {
         xAxes: [{
           ticks: {
-            fontFamily: 'Comfortaa',
-            fontSize: 18,
-            autoSkip: false
+            display: false,
+            stepSize: 1,
+            suggestedMax: 2,
+            beginAtZero: true
           }
         }],
         yAxes: [{
           ticks: {
-            fontFamily: 'Comfortaa',
-            fontSize: 16,
+            // fontFamily: 'Comfortaa',
+            fontSize: 18,
             autoSkip: false
           }
         }]
