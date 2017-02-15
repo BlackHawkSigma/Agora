@@ -78,10 +78,10 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         });
 
         $scope.summary = summary;
-        $scope.rft = _.round(summary.OK / $scope.sumExclET * 100, 2);
-        $scope.ftt = _.round(summary.OK / $scope.sumInclET * 100, 2);
-        $scope.frq = _.round((summary.OK + summary['OK poliert']) / $scope.sumInclET * 100, 2);
-        $scope.scrap = _.round(summary.Ausschuss / $scope.sumInclET * 100, 2);
+        $scope.rft = summary.OK / $scope.sumExclET * 100;
+        $scope.ftt = summary.OK / $scope.sumInclET * 100;
+        $scope.frq = (summary.OK + summary['OK poliert']) / $scope.sumInclET * 100;
+        $scope.scrap = summary.Ausschuss / $scope.sumInclET * 100;
         $scope.paintScrap = null;
 
         $scope.defects = defects;
