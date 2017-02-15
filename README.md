@@ -1,4 +1,4 @@
-# PaintlineApp
+# Agora
 
 __WIP__
 

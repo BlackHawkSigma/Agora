@@ -1,9 +1,9 @@
 {
-  "name": "paintline_app",
+  "name": "agora",
   "version": "0.1.0",
   "description": "App for Paintline 5",
   "main": "server.js",
-  "repository": "https://blackhawksigma@github.com/BlackHawkSigma/PaintlineApp.git",
+  "repository": "https://blackhawksigma@github.com/BlackHawkSigma/Agora.git",
   "private": true,
   "scripts": {
     "start": "node server",
