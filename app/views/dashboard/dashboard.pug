@@ -30,8 +30,15 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
           .panel-body
             h3
     .col-sm-10
-      .panel.panel-default
-        .panel-heading: h2 aktuelle Fehler (Ausschuss & Nacharbeit)
-        .panel-body
-          canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions")
-          // pre(ng-bind="defects | json ")
+      .row
+        .col-xs-6
+          .panel.panel-primary
+            .panel-heading: h2 aktuelle Fehler (Ausschuss & Nacharbeit)
+            .panel-body
+              canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions")
+              // pre(ng-bind="defects | json ")
+        .col-xs-6
+          .panel.panel-primary
+            .panel-heading: h2 heutige R&uuml;ckweisungen
+            .panel-body
+              canvas#rejectionsChart.chart.chart-horizontal-bar(chart-data="rejectionsChartData" chart-labels="rejectionsChartLabels" chart-options="rejectionsChartOptions")

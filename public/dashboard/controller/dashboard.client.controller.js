@@ -1,5 +1,5 @@
-angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$interval', 'Dashboard',
-  function($scope, $filter, $interval, Dashboard) {
+angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$interval', 'Dashboard', 'Rejections',
+  function($scope, $filter, $interval, Dashboard, Rejections) {
     $scope.refresh = function() {
       var hour = moment().get('hour');
       var startHour = null;
@@ -109,6 +109,16 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         $scope.err = err;
         $scope.lastUpdateHuman = moment().from($scope.lastUpdate, true);
       });
+
+      // Show all rejections since 6am
+      var startTimeRejections = moment().startOf('hour').set('hour', 6).format('YYYY-MM-DD HH:mm:ss');
+      var endTimeRejections = moment(startTimeRejections).add('days', 1).format('YYYY-MM-DD HH:mm:ss');
+      Rejections.query({
+        'startTime': startTimeRejections,
+        'endTime': endTimeRejections
+      }, function(result) {
+        // TODO...
+      })
     }
     $scope.defectsChartOptions = {
       scales: {
