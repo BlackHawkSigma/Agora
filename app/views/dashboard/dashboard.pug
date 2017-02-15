@@ -5,22 +5,22 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   .row
     .col-md-2
       .row
-        .panel.panel-default
+        .panel.panel-default(data-ng-class="{'panel-success' : frq >= 90, 'panel-danger' : frq < 90 }")
           .panel-heading: h3 FRQ: {{ frq | number: 2 }}%
           .panel-body
             h4 {{ summary.OK + summary['OK poliert'] }} / {{ sumInclET }}
       .row
-        .panel.panel-default
+        .panel.panel-default(data-ng-class="{'panel-success' : ftt >= 80, 'panel-danger' : ftt < 80 }")
           .panel-heading: h3 FTT: {{ ftt | number: 2 }}%
           .panel-body
             h4 {{ summary.OK }} / {{ sumInclET }}
       .row
-        .panel.panel-default
+        .panel.panel-default(data-ng-class="{'panel-success' : scrap <= 1, 'panel-danger' : scrap > 1 }")
           .panel-heading: h3 Scrap: {{ scrap | number: 2 }}%
           .panel-body
             h4 {{ summary.Ausschuss }} / {{ sumInclET }}
       .row
-        .panel.panel-default
+        .panel.panel-default(data-ng-class="{'panel-success' : rft >= 81.7, 'panel-danger' : rft < 81.7 }")
           .panel-heading: h3 RFT: {{ rft | number: 2 }}%
           .panel-body
             h4 {{ summary.OK }} / {{ sumExclET }}
