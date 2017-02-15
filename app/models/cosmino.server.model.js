@@ -84,6 +84,9 @@ var Export = bookshelf.Model.extend({
   fehlerort: function() {
     return this.belongsTo(FehlerOrt, 'fehlerort_code', 'fehlerort_code');
   },
+  artikeldaten: function() {
+    return this.hasOne(ArtikelDaten, 'materialnummer', 'artikelcode');
+  }
 });
 exports.Export = function() {
   return Export;

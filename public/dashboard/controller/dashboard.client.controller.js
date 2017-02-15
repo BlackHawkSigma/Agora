@@ -1,5 +1,5 @@
-angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$interval', 'Dashboard',
-  function($scope, $filter, $interval, Dashboard) {
+angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$interval', 'Dashboard', 'Rejections',
+  function($scope, $filter, $interval, Dashboard, Rejections) {
     $scope.refresh = function() {
       var hour = moment().get('hour');
       var startHour = null;
@@ -24,6 +24,8 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         $scope.err = {
           status: 'OK'
         };
+        // Save moment of last server connection
+        $scope.lastUpdate = moment();
 
         var summary = _
           .chain(response)
@@ -51,6 +53,10 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         var defects = _
           .chain(response)
+          .filter({
+            'verwendung': 'NA',
+            'verwendung': 'Ausschuss'
+          })
           .flatMap(function(item) {
             if (_.has(item, 'fehlerart')) {
               return item.fehlerart.fehlerart_text;
@@ -69,18 +75,31 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .reverse()
           .value();
 
+        var paintScrap = _
+          .chain(response)
+          .filter({
+            'fahrweg': 'Normal',
+            'verwendung': 'Ausschuss'
+          })
+          .flatMap(function(item) {
+            return item.artikeldaten;
+          })
+          .value();
+
         var labelsData = _.unzip(defects);
-        var labels = labelsData[0];
         var data = _.map(labelsData[1], function(n) {
-          return _.round(n / $scope.sumInclET *100, 2);
+          return _.round(n / $scope.sumInclET *100, 1);
+        });
+        var labels = _.map(labelsData[0], function(value, index) {
+          return "".concat(value, ": ", data[index], "%");
         });
 
         $scope.summary = summary;
-        $scope.rft = _.round(summary.OK / $scope.sumExclET * 100, 2);
-        $scope.ftt = _.round(summary.OK / $scope.sumInclET * 100, 2);
-        $scope.frq = _.round((summary.OK + summary['OK poliert']) / $scope.sumInclET * 100, 2);
-        $scope.scrap = _.round(summary.Ausschuss / $scope.sumInclET * 100, 2);
-        $scope.paintScrap = null;
+        $scope.rft = summary.OK / $scope.sumExclET * 100;
+        $scope.ftt = summary.OK / $scope.sumInclET * 100;
+        $scope.frq = (summary.OK + summary['OK poliert']) / $scope.sumInclET * 100;
+        $scope.scrap = summary.Ausschuss / $scope.sumInclET * 100;
+        $scope.paintScrap = _.sumBy(paintScrap, 'preis') / 1000;
 
         $scope.defects = defects;
         $scope.defectsChartLabels = labels;
@@ -88,21 +107,33 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       },
       function(err) {
         $scope.err = err;
+        $scope.lastUpdateHuman = moment().from($scope.lastUpdate, true);
       });
+
+      // Show all rejections since 6am
+      var startTimeRejections = moment().startOf('hour').set('hour', 6).format('YYYY-MM-DD HH:mm:ss');
+      var endTimeRejections = moment(startTimeRejections).add('days', 1).format('YYYY-MM-DD HH:mm:ss');
+      Rejections.query({
+        'startTime': startTimeRejections,
+        'endTime': endTimeRejections
+      }, function(result) {
+        // TODO...
+      })
     }
     $scope.defectsChartOptions = {
       scales: {
         xAxes: [{
           ticks: {
-            fontFamily: 'Comfortaa',
-            fontSize: 18,
-            autoSkip: false
+            display: false,
+            stepSize: 1,
+            suggestedMax: 2,
+            beginAtZero: true
           }
         }],
         yAxes: [{
           ticks: {
-            fontFamily: 'Comfortaa',
-            fontSize: 16,
+            // fontFamily: 'Comfortaa',
+            fontSize: 18,
             autoSkip: false
           }
         }]
