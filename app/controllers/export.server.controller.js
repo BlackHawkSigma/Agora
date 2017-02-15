@@ -1,4 +1,4 @@
-var bookshelf = require('../../config/bookshelf.js');
+var bookshelf = require('../../config/bookshelf.js')();
 var cosmino = require('../models/cosmino.server.model.js');
 var _ = require('lodash');
 
@@ -11,14 +11,18 @@ function limitOutput(data, filterArray) {
   return resultArray;
 };
 
+var Export = bookshelf.Collection.extend({
+  model: cosmino.Export()
+});
+
 exports.list = function(req, res) {
-  cosmino.Export()
+  Export
     .query(function(qb) {
       qb.select('*')
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
-    .fetchAll({
-      withRelated: ['fehlerart', 'fehlerort']
+    .fetch({
+      withRelated: ['fehlerart', 'fehlerort', 'artikeldaten']
     })
     .then(function(result) {
     res.json(result);

@@ -71,6 +71,17 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .reverse()
           .value();
 
+        var paintScrap = _
+          .chain(response)
+          .filter({
+            'fahrweg': 'Normal',
+            'verwendung': 'Ausschuss'
+          })
+          .flatMap(function(item) {
+            return item.artikeldaten;
+          })
+          .value();
+
         var labelsData = _.unzip(defects);
         var labels = labelsData[0];
         var data = _.map(labelsData[1], function(n) {
@@ -82,7 +93,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         $scope.ftt = summary.OK / $scope.sumInclET * 100;
         $scope.frq = (summary.OK + summary['OK poliert']) / $scope.sumInclET * 100;
         $scope.scrap = summary.Ausschuss / $scope.sumInclET * 100;
-        $scope.paintScrap = null;
+        $scope.paintScrap = _.sumBy(paintScrap, 'preis') / 1000;
 
         $scope.defects = defects;
         $scope.defectsChartLabels = labels;

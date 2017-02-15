@@ -18,16 +18,18 @@ exports.render = function(req, res) {
 exports.list = function(req, res) {
   cosmino.Export()
     .query(function(qb) {
-      qb.select(['sid', 'datum', 'fehlerart_code', 'io_notouch', 'io_poliert', 'nacharbeit', 'ausschuss', 'Fahrweg'])
+      qb.select(['sid', 'artikelcode', 'datum', 'fehlerart_code', 'io_notouch', 'io_poliert', 'nacharbeit', 'ausschuss', 'Fahrweg'])
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
     .fetchAll({
-      withRelated: ['fehlerart']
+      withRelated: ['fehlerart', 'artikeldaten']
     })
     .then(function(result) {
       res.json(limitOutput(result, [
+        'sid',
         'datum',
         'fehlerart.fehlerart_text',
+        'artikeldaten.preis',
         'verwendung',
         'fahrweg'
       ]));
