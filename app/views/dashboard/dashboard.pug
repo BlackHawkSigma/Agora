@@ -1,7 +1,7 @@
 section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   // h1.page-header I'm a fancy dashboard [WIP]
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
-  #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") Server offline
+  #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") <b>Server offline</b> seit {{ lastUpdateHuman }}
   .row
     .col-md-2
       .row

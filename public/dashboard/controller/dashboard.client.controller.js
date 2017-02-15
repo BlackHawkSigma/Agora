@@ -24,6 +24,8 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         $scope.err = {
           status: 'OK'
         };
+        // Save moment of last server connection
+        $scope.lastUpdate = moment();
 
         var summary = _
           .chain(response)
@@ -88,6 +90,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       },
       function(err) {
         $scope.err = err;
+        $scope.lastUpdateHuman = moment().from($scope.lastUpdate, true);
       });
     }
     $scope.defectsChartOptions = {
