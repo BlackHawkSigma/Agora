@@ -27,35 +27,55 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         // Save moment of last server connection
         $scope.lastUpdate = moment();
 
-        var summary = _
+        var bigPartsInclSpare = _
           .chain(response)
           .filter({
+            'artikelart': 'Großteil'
+          })
+          .value();
+
+        var bigPartsExclSpare = _
+          .chain(response)
+          .filter({
+            'artikelart': 'Großteil',
             'fahrweg': 'Normal'
           })
+          .value();
+
+        var summaryInclSpare = _
+          .chain(bigPartsInclSpare)
           .flatMap(function(item) {
             return item.verwendung;
           })
           .countBy()
           .value();
 
-        $scope.sumInclET = _
-          .chain(summary)
-          .values()
-          .sum()
+        var summaryExclSpare = _
+          .chain(bigPartsExclSpare)
+          .flatMap(function(item) {
+            return item.verwendung;
+          })
+          .countBy()
           .value();
 
-        $scope.sumExclET = _
-          .chain(summary)
+        $scope.sumInclSpare = _
+          .chain(summaryInclSpare)
           .omit('n/a')
           .values()
           .sum()
           .value();
 
+        $scope.sumExclSpare = _
+          .chain(summaryExclSpare)
+          .values()
+          .sum()
+          .value();
+
         var defects = _
-          .chain(response)
-          .filter({
-            'verwendung': 'NA',
-            'verwendung': 'Ausschuss'
+          .chain(bigPartsInclSpare)
+          .filter(function(o) {
+            return o.verwendung == 'Ausschuss'
+              || o.verwendung == 'NA';              ;
           })
           .flatMap(function(item) {
             if (_.has(item, 'fehlerart')) {
@@ -76,10 +96,11 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .value();
 
         var paintScrap = _
-          .chain(response)
-          .filter({
-            'fahrweg': 'Normal',
-            'verwendung': 'Ausschuss'
+          .chain(bigPartsExclSpare)
+          .filter(function(o) {
+            return o.verwendung == 'Ausschuss'
+              // || o.verwendung == 'NA'
+              ;
           })
           .flatMap(function(item) {
             return item.artikeldaten;
@@ -88,22 +109,24 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         var labelsData = _.unzip(defects);
         var data = _.map(labelsData[1], function(n) {
-          return _.round(n / $scope.sumInclET *100, 1);
+          return _.round(n / $scope.sumInclSpare * 100, 2);
         });
         var labels = _.map(labelsData[0], function(value, index) {
-          return "".concat(value, ": ", data[index], "%");
+          return "".concat(value, ": ", data[index], "% ");
         });
 
         // Check for null values
-        summary.OK = (_.isNumber(summary.OK) ? summary.OK : 0 );
-        summary['OK poliert'] = (_.isNumber(summary['OK polliert']) ? summary['OK polliert'] : 0 );
-        summary.Ausschuss = (_.isNumber(summary.Ausschuss) ? summary.Ausschuss : 0 );
+        summaryInclSpare.OK = (_.isNumber(summaryInclSpare.OK) ? summaryInclSpare.OK : 0 );
+        summaryExclSpare.OK = (_.isNumber(summaryExclSpare.OK) ? summaryExclSpare.OK : 0 );
+        summaryInclSpare['OK poliert'] = (_.isNumber(summaryInclSpare['OK poliert']) ? summaryInclSpare['OK poliert'] : 0 );
+        summaryInclSpare.Ausschuss = (_.isNumber(summaryInclSpare.Ausschuss) ? summaryInclSpare.Ausschuss : 0 );
 
-        $scope.summary = summary;
-        $scope.rft = summary.OK / $scope.sumExclET * 100;
-        $scope.ftt = summary.OK / $scope.sumInclET * 100;
-        $scope.frq = (summary.OK + summary['OK poliert']) / $scope.sumInclET * 100;
-        $scope.scrap = summary.Ausschuss / $scope.sumInclET * 100;
+        $scope.summaryInclSpare = summaryInclSpare;
+        $scope.summaryExclSpare = summaryExclSpare;
+        $scope.rft = summaryExclSpare.OK / $scope.sumExclSpare * 100;
+        $scope.ftt = summaryInclSpare.OK / $scope.sumInclSpare * 100;
+        $scope.frq = _.sum([summaryInclSpare.OK, summaryInclSpare['OK poliert']]) / $scope.sumInclSpare * 100;
+        $scope.scrap = summaryInclSpare.Ausschuss / $scope.sumInclSpare * 100;
         $scope.paintScrap = _.sumBy(paintScrap, 'preis') / 1000;
 
         $scope.defects = defects;
@@ -117,13 +140,31 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
       // Show all rejections since 6am
       var startTimeRejections = moment().startOf('hour').set('hour', 6).format('YYYY-MM-DD HH:mm:ss');
-      var endTimeRejections = moment(startTimeRejections).add('days', 1).format('YYYY-MM-DD HH:mm:ss');
+      var endTimeRejections = moment(startTimeRejections).add(1, 'days').format('YYYY-MM-DD HH:mm:ss');
       Rejections.query({
         'startTime': startTimeRejections,
         'endTime': endTimeRejections
       }, function(result) {
-        // TODO...
-      })
+        // Fill array with all defects
+        defectList = _.flatMap(result, function(item) {
+          return item.fehlerart.fehlerart_text;
+        });
+        // Defects summary
+        var defectsSummary = _
+          .chain(defectList)
+          .countBy()
+          .entries()
+          .sortBy(function(a) {
+            return a[1];
+          })
+          .reverse()
+          .unzip()
+          .value();
+
+        $scope.rejectionsChartLabels = defectsSummary[0];
+        $scope.rejectionsChartData = defectsSummary[1];
+
+      });
     }
     $scope.defectsChartOptions = {
       scales: {
@@ -138,7 +179,24 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         yAxes: [{
           ticks: {
             // fontFamily: 'Comfortaa',
-            fontSize: 18,
+            fontSize: 26,
+            autoSkip: false
+          }
+        }]
+      }
+    };
+
+    $scope.rejectionsChartOptions = {
+      scales: {
+        xAxes: [{
+          ticks: {
+            fontSize : 20,
+            beginAtZero: true
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            fontSize: 24,
             autoSkip: false
           }
         }]

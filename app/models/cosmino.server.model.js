@@ -76,6 +76,19 @@ var Export = bookshelf.Model.extend({
         default:
           return 'n/a';
       }
+    },
+    artikelart: function() {
+      switch (this.get('Fahrweg')) {
+        case 340:
+        case 331:
+          return 'Großteil';
+          break;
+        case 360:
+          return 'Kleinteil';
+          break;
+        default:
+          return 'n/a';
+      }
     }
   },
   fehlerart: function() {

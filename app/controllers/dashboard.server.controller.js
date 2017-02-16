@@ -31,7 +31,8 @@ exports.list = function(req, res) {
         'fehlerart.fehlerart_text',
         'artikeldaten.preis',
         'verwendung',
-        'fahrweg'
+        'fahrweg',
+        'artikelart'
       ]));
   }).catch(function(err) {
     console.error(err);
