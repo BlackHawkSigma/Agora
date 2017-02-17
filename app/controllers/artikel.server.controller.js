@@ -9,3 +9,19 @@ exports.list = function(req, res) {
     res.status(500).json({error: true, data: {message: err.message}});
   });
 };
+
+var ArtikelDaten = bookshelf().Collection.extend({
+  model: cosmino.ArtikelDaten()
+});
+
+exports.artikeldaten = function(req, res) {
+  ArtikelDaten
+    .fetch()
+    .then(function(collection) {
+      res.json(collection);
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+};

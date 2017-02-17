@@ -14,8 +14,10 @@ var app = express();
 
 debug('starting express server');
 
-http.createServer(app).listen(3000, function() {
-  debug('express running');
+var port = (process.env.NODE_ENV == 'production' ? 80 : 3000);
+
+http.createServer(app).listen(port, function() {
+  debug('express running at port %s', port);
 })
 
 // crtl+c in Windows richtig interpretieren

@@ -11,6 +11,7 @@ module.exports = function() {
   if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   } else if (process.env.NODE_ENV === 'production') {
+    app.use(morgan('common'));
     app.use(compress());
   }
 
@@ -30,6 +31,9 @@ module.exports = function() {
   require('../app/routes/artikel.server.routes.js')(app);
   require('../app/routes/farbton.server.routes.js')(app);
   require('../app/routes/cosmino.server.routes.js')(app);
+  require('../app/routes/export.server.routes.js')(app);
+  require('../app/routes/rejections.server.routes.js')(app);
+  require('../app/routes/dashboard.server.routes.js')(app);
 
   return app;
 };

@@ -1,0 +1,44 @@
+section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
+  // h1.page-header I'm a fancy dashboard [WIP]
+  #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
+  #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") <b>Server offline</b> seit {{ lastUpdateHuman }}
+  .row
+    .col-sm-2
+      .row#frq
+        .panel.panel-default(data-ng-class="{'panel-success' : frq >= 90, 'panel-danger' : frq < 90 }")
+          .panel-heading: h1 FRQ: {{ frq | number: 2 }}%
+          .panel-body
+            h3 {{ summaryInclSpare.OK + summaryInclSpare['OK poliert'] }} / {{ sumInclSpare }}
+      .row#ftt
+        .panel.panel-default(data-ng-class="{'panel-success' : ftt >= 80, 'panel-danger' : ftt < 80 }")
+          .panel-heading: h1 FTT: {{ ftt | number: 2 }}%
+          .panel-body
+            h3 {{ summaryInclSpare.OK }} / {{ sumInclSpare }}
+      .row#rft
+        .panel.panel-default(data-ng-class="{'panel-success' : rft >= 81.7, 'panel-danger' : rft < 81.7 }")
+          .panel-heading: h1 RFT: {{ rft | number: 2 }}%
+          .panel-body
+            h3 {{ summaryExclSpare.OK }} / {{ sumExclSpare }}
+      .row#scrap
+        .panel.panel-default(data-ng-class="{'panel-success' : scrap <= 1, 'panel-danger' : scrap > 1 }")
+          .panel-heading: h1 Scrap: {{ scrap | number: 2 }}%
+          .panel-body
+            h3 {{ summaryInclSpare.Ausschuss }} / {{ sumInclSpare }}
+      .row#paintScrap
+        .panel.panel-default
+          .panel-heading: h1 Paint Scrap: {{ paintScrap | number: 2}}€
+          .panel-body
+            h3 {{ summaryExclSpare.Ausschuss }}
+    .col-sm-10
+      .row
+        .col-lg-7
+          .panel.panel-info
+            .panel-heading: h2 aktuelle Fehler (Ausschuss & Nacharbeit)
+            .panel-body
+              canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions")
+              // pre(ng-bind="defects | json ")
+        .col-lg-5
+          .panel.panel-info
+            .panel-heading: h2 heutige R&uuml;ckweisungen: {{ rejectionsSum }}
+            .panel-body
+              canvas#rejectionsChart.chart.chart-horizontal-bar(chart-data="rejectionsChartData" chart-labels="rejectionsChartLabels" chart-options="rejectionsChartOptions")

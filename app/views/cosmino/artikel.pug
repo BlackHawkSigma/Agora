@@ -1,6 +1,8 @@
 section(data-ng-controller="ArtikelCtrl" data-ng-init="find()")
   h1.page-header Artikel Liste
 
+  #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
+
   table.table.table-hover.table-condensed
     thead
       tr

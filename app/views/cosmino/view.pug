@@ -1,11 +1,64 @@
+div(ng-controller="AnalysisCtrl")
+  div(ng-controller="TimepickerCtrl")
+    .row
+      .col-sm-4
+        button.btn.btn-link(ng-click="isCollapsed = !isCollapsed" role="button") <small>Von</small> {{startTime | date:"dd.MM.yy HH:mm" }} <small>bis</small> {{endTime | date:"dd.MM.yy HH:mm" }}
+      .col-sm-1
+        button.btn(ng-click="updateTimes()")
+          span.glyphicon.glyphicon-refresh
+    .well(uib-collapse="isCollapsed")
+      .row
+        .col-sm-2
+          p.form-group
+            label Von:
+            input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="startTime")
+        .col-sm-2
+          #startTimePicker(uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+        .col-sm-2
+          p.form-group
+            label Bis:
+            input.form-control(type="text" uib-datepicker-popup="{{dateFormat}}" ng-model="endTime")
+        .col-sm-2
+          #EndTimePicker(uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
+        .col-sm-4
+          button.btn.btn-default(type="button" ng-click="setEarly()") Fr&uuml;h
+          button.btn.btn-default(type="button" ng-click="setLate()") Sp&auml;t
+          button.btn.btn-default(type="button" ng-click="setNight()") Nacht
+      .row
+        button.btn.btn-lg.btn-primary(type="button" ng-click="updateTimes()") Update
 
-#timepickerCtrl.well(ng-controller="TimepickerDemoCtrl")
-
-  pre.alert.alert-success {{mytime | date:"HH:mm 'Uhr'" }}
-  #timepicker(uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian")
-
-  hr
-
-  button.btn.btn-default(type="button" ng-click="setEarly()") 06:00
-  button.btn.btn-default(type="button" ng-click="setLate()") 14:00
-  button.btn.btn-default(type="button" ng-click="setNight()") 22:00
+  .row
+    .col-md-8.col-md-offset-2
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th SID
+            th Auslauf
+            th Buchung
+            th Artikelcode
+            th Farbcode
+            th Typcode
+            th Skid
+            th Skidseite
+            th Position
+            th Verwendung
+            th Basis
+            th Fehler
+            th Fehler Ort
+            th Fahrweg
+        tbody
+          tr(data-ng-repeat="pos in export" data-ng-class="{success : pos.verwendung == 'OK poliert', warning : pos.verwendung == 'NA', danger : pos.verwendung == 'Ausschuss', info : pos.verwendung == 'n/a'}")
+            td(data-ng-bind="pos.sid")
+            td(data-ng-bind="pos.auslaufzeit | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="pos.datum | date:'dd.MM.yy HH:mm'")
+            td(data-ng-bind="pos.artikelcode")
+            td(data-ng-bind="pos.farbcode")
+            td(data-ng-bind="pos.typcode")
+            td(data-ng-bind="pos.skid")
+            td(data-ng-bind="pos.skidseite")
+            td(data-ng-bind="pos.lackierposition")
+            td(data-ng-bind="pos.verwendung")
+            td(data-ng-bind="pos.basis")
+            td(data-ng-bind="pos.fehlerart.fehlerart_text")
+            td(data-ng-bind="pos.fehlerort.fehlerort_text")
+            td(data-ng-bind="pos.fahrweg")

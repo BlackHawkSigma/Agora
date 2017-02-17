@@ -8,11 +8,10 @@ html(lang="de")
     link(rel="stylesheet" href="/css/master.css")
     title= title
   body
-    div.container-fluid
-      navigation
+    navigation
 
-      #main.container
-        section(ng-view)
+    #main.container-fluid
+      section(ng-view)
 
 
     script(type="text/javascript" src="/lib/angular/angular.min.js")
@@ -23,12 +22,18 @@ html(lang="de")
     script(type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
     script(type="text/javascript" src="/lib/angular-animate/angular-animate.min.js")
     script(type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.min.js")
+    script(type="text/javascript" src="/lib/lodash/dist/lodash.min.js")
+    script(type="text/javascript" src="/lib/chart.js/dist/Chart.min.js")
+    script(type="text/javascript" src="/lib/angular-chart.js/dist/angular-chart.min.js")
+    script(type="text/javascript" src="/lib/moment/min/moment-with-locales.min.js")
 
 
     script(type="text/javascript" src="/application.js")
     script(type="text/javascript" src="/cosmino/cosmino.client.module.js")
     script(type="text/javascript" src="/cosmino/controllers/cosmino.client.controller.js")
     script(type="text/javascript" src="/cosmino/config/cosmino.client.routes.js")
+    script(type="text/javascript" src="/cosmino/services/export.client.service.js")
+    script(type="text/javascript" src="/cosmino/controllers/analysis.client.controller.js")
 
     script(type="text/javascript" src="/cosmino/artikel/artikel.client.module.js")
     script(type="text/javascript" src="/cosmino/artikel/controllers/artikel.client.controller.js")
@@ -42,3 +47,17 @@ html(lang="de")
 
     script(type="text/javascript" src="/navigation/services/navigation.client.service.js")
     script(type="text/javascript" src="/navigation/directives/navigation.client.directive.js")
+    script(type="text/javascript" src="/navigation/controllers/navigation.client.controller.js")
+
+    script(type="text/javascript" src="/rejections/rejections.client.module.js")
+    script(type="text/javascript" src="/rejections/config/rejections.client.routes.js")
+    script(type="text/javascript" src="/rejections/controllers/rejections.client.controller.js")
+    script(type="text/javascript" src="/rejections/services/rejections.client.service.js")
+
+    script(type="text/javascript" src="/dashboard/dashboard.client.module.js")
+    script(type="text/javascript" src="/dashboard/config/dashboard.client.routes.js")
+    script(type="text/javascript" src="/dashboard/controller/dashboard.client.controller.js")
+    script(type="text/javascript" src="/dashboard/services/dashboard.client.service.js")
+    script(type="text/javascript" src="/dashboard/services/rejections.client.service.js")
+
+    script(type="text/javascript" src="/directives/print.client.directive.js")
