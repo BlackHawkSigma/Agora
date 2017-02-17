@@ -163,6 +163,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         $scope.rejectionsChartLabels = defectsSummary[0];
         $scope.rejectionsChartData = defectsSummary[1];
+        $scope.rejectionsSum  = _.sum(defectsSummary[1]);
 
       });
     }

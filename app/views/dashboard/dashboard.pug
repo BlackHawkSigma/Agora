@@ -39,6 +39,6 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
               // pre(ng-bind="defects | json ")
         .col-lg-5
           .panel.panel-info
-            .panel-heading: h2 heutige R&uuml;ckweisungen
+            .panel-heading: h2 heutige R&uuml;ckweisungen: {{ rejectionsSum }}
             .panel-body
               canvas#rejectionsChart.chart.chart-horizontal-bar(chart-data="rejectionsChartData" chart-labels="rejectionsChartLabels" chart-options="rejectionsChartOptions")
