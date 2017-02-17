@@ -204,8 +204,8 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       }
     };
 
-  // Auto refresh every 30 seconds
-  autoRefresh = $interval($scope.refresh, 30000);
+  // Auto refresh every minute
+  autoRefresh = $interval($scope.refresh, 60000);
   $scope.$on('$destroy', function() {
     $interval.cancel(autoRefresh);
   });
