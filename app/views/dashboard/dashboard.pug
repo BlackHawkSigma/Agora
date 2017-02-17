@@ -5,17 +5,17 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   .row
     .col-md-3#frq
       .panel.panel-default(data-ng-class="{'panel-success' : frq >= 90, 'panel-danger' : frq < 90 }")
-        .panel-heading: h1 FRQ: {{ frq | number: 2 }}%
+        .panel-heading: h1 FRQ: {{ frq | number: 1 }}%
         .panel-body
           h2 {{ summaryInclSpare.OK + summaryInclSpare['OK poliert'] }} / {{ sumInclSpare }}
     .col-md-3#rft
       .panel.panel-default(data-ng-class="{'panel-success' : rft >= 81.7, 'panel-danger' : rft < 81.7 }")
-        .panel-heading: h1 RFT: {{ rft | number: 2 }}%
+        .panel-heading: h1 RFT: {{ rft | number: 1 }}%
         .panel-body
           h2 {{ summaryExclSpare.OK }} / {{ sumExclSpare }}
     .col-md-3#scrap
       .panel.panel-default(data-ng-class="{'panel-success' : scrap <= 1, 'panel-danger' : scrap > 1 }")
-        .panel-heading: h1 Scrap: {{ scrap | number: 2 }}%
+        .panel-heading: h1 Scrap: {{ scrap | number: 1 }}%
         .panel-body
           h2 {{ summaryInclSpare.Ausschuss }} / {{ sumInclSpare }}
     .col-md-3#paintScrap

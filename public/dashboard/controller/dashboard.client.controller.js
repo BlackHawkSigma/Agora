@@ -172,6 +172,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       scales: {
         xAxes: [{
           ticks: {
+            fontSize : 20,
             beginAtZero: true
           }
         }],
