@@ -22,7 +22,7 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
       .panel.panel-info
         .panel-heading: h1 Paint Scrap:
         .panel-body
-          h1 {{ paintScrap | number: 2}}€
+          h1 {{ paintScrap | currency}}
           // h3 {{ summaryExclSpare.Ausschuss }}
   .row
     .col-md-8
