@@ -61,7 +61,16 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
           $scope.defectSelection = _.uniq(defectList);
 
           // Defects summary
-          $scope.defectsSummary = _.countBy(defectList);
+          $scope.defectsSummary = _
+            .chain(defectList)
+            .countBy()
+            .entries()
+            .sortBy(function(a) {
+              return a[1];
+            })
+            .reverse()
+            .unzip()
+            .value();
 
           // Article summary
           $scope.articlesSummary = _
@@ -73,6 +82,12 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
             .mapKeys(function(value, key) {
               return articleNames[key];
             })
+            .entries()
+            .sortBy(function(a) {
+              return a[1];
+            })
+            .reverse()
+            .unzip()
             .value();
 
           // Charts
@@ -104,11 +119,11 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     };
 
     $scope.updateCharts = function() {
-      $scope.defectBarLabels = _.keys($scope.defectsSummary);
-      $scope.defectBarData = _.values($scope.defectsSummary);
+      $scope.defectBarLabels = $scope.defectsSummary[0];
+      $scope.defectBarData = $scope.defectsSummary[1];
 
-      $scope.articleBarLabels = _.keys($scope.articlesSummary);
-      $scope.articleBarData = _.values($scope.articlesSummary);
+      $scope.articleBarLabels = $scope.articlesSummary[0];
+      $scope.articleBarData = $scope.articlesSummary[1];
     };
 
     // Filter functions
