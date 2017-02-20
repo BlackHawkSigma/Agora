@@ -25,14 +25,7 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     $scope.startTimeInput = new Date(startTime);
     $scope.endTimeInput = new Date(endTime);
 
-    // For future use...
-    // $scope.articleSelection = _.keys(articleList);
-
-    $scope.articleSelection = [
-      'Touran',
-      'Tiguan',
-      'Amarok'
-    ];
+    $scope.articleSelection = _.keys(articleList);
 
     $scope.find = function() {
       var startTimeQuery = moment($scope.startTimeInput).format('YYYY-MM-DD HH:mm:ss');
@@ -44,7 +37,16 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
         'endTime': endTimeQuery
       }, function(data) {
           // Show all datasets
-          $scope.rejections = data;
+          var articleNames = _.invert(articleList);
+
+          var enrichedData = _
+            .forEach(data, function(value) {
+              var name = articleNames[value.artikel.typcode];
+              _.assign(value, {
+                'bezeichnung': name
+              })
+            })
+          $scope.rejections = enrichedData;
 
           // Refresh displayed dates
           $scope.startTimeDisplay = new Date(startTimeQuery);
@@ -62,8 +64,6 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
           $scope.defectsSummary = _.countBy(defectList);
 
           // Article summary
-          var articleNames = _.invert(articleList);
-
           $scope.articlesSummary = _
             .chain(data)
             .flatMap(function(item) {
@@ -116,7 +116,7 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
       $scope.search.fehlerart.fehlerart_text = "";
     };
     $scope.clearArticle = function() {
-      $scope.search.artikel.artikelbezeichnung = "";
+      $scope.search.bezeichnung = "";
     };
   }
 ]);

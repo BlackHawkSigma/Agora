@@ -37,12 +37,12 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
         canvas#articlesChart.chart.chart-bar(chart-data="articleBarData" chart-labels="articleBarLabels" chart-options="articleBarOptions")
 
   .row
-    .col-md-4.col-lg-3
+    .col-md-4.col-lg-3.col-lg-offset-1
       .form-group
         label.sr-only(for="searchArticle") Artikel
         .input-group#searchArticle
           .input-group-addon: i.glyphicon.glyphicon-search
-          input.form-control(type="text" data-ng-model="search.artikel.artikelbezeichnung" data-ng-change="updateCharts()" uib-typeahead="item for item in articleSelection | filter:$viewValue" placeholder="Artikel")
+          input.form-control(type="text" data-ng-model="search.bezeichnung" data-ng-change="updateCharts()" uib-typeahead="item for item in articleSelection | filter:$viewValue" placeholder="Artikel")
           span.input-group-btn
             button.btn.btn-default(type="button" data-ng-click="clearArticle()"): i.glyphicon.glyphicon-remove
     .col-md-4.col-lg-3
@@ -53,7 +53,7 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
           input.form-control(type="text" data-ng-model="search.fehlerart.fehlerart_text" data-ng-change="updateCharts()" uib-typeahead="defect for defect in defectSelection | filter:$viewValue" placeholder="Fehler")
           span.input-group-btn
             button.btn.btn-default(type="button" data-ng-click="clearDefect()"): i.glyphicon.glyphicon-remove
-    .col-md-4.col-lg-3.col-lg-offset-1
+    .col-md-4.col-lg-3
       .form-group
         label.sr-only(for="searchDecision") Verwendung
         .input-group#searchDecision
@@ -79,7 +79,7 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
         tbody
           tr(data-ng-repeat="item in rejections | filter:search")
             td(data-ng-bind="item.datum | date:'dd.MM.yy HH:mm'")
-            td(data-ng-bind="item.artikel.artikelbezeichnung")
+            td(data-ng-bind="item.bezeichnung")
             td(data-ng-bind="item.fehlerart.fehlerart_text")
             td(data-ng-bind="item.verwendung")
             td(data-ng-bind="item.artikel.datum | date:'dd.MM.yy HH:mm'")
