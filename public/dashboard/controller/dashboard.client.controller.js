@@ -109,7 +109,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         var labelsData = _.unzip(defects);
         var data = _.map(labelsData[1], function(n) {
-          return _.round(n / $scope.sumInclSpare * 100, 2);
+          return _.round(n / $scope.sumInclSpare * 100, 1);
         });
         var labels = _.map(labelsData[0], function(value, index) {
           return "".concat(value, ": ", data[index], "% ");
@@ -131,7 +131,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
 
         $scope.defects = defects;
         $scope.defectsChartLabels = labels;
-        $scope.defectsChartData = data;
+        $scope.defectsChartData = labelsData[1];
       },
       function(err) {
         $scope.err = err;
@@ -168,19 +168,17 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       });
     }
     $scope.defectsChartOptions = {
+      maintainAspectRatio: false,
       scales: {
         xAxes: [{
           ticks: {
-            display: false,
-            stepSize: 1,
-            suggestedMax: 2,
+            fontSize : 20,
             beginAtZero: true
           }
         }],
         yAxes: [{
           ticks: {
-            // fontFamily: 'Comfortaa',
-            fontSize: 26,
+            fontSize: 20,
             autoSkip: false
           }
         }]
@@ -197,15 +195,15 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         }],
         yAxes: [{
           ticks: {
-            fontSize: 24,
+            fontSize: 18,
             autoSkip: false
           }
         }]
       }
     };
 
-  // Auto refresh every 30 seconds
-  autoRefresh = $interval($scope.refresh, 30000);
+  // Auto refresh every minute
+  autoRefresh = $interval($scope.refresh, 60000);
   $scope.$on('$destroy', function() {
     $interval.cancel(autoRefresh);
   });

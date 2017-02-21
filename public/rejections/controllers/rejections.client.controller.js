@@ -25,14 +25,7 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     $scope.startTimeInput = new Date(startTime);
     $scope.endTimeInput = new Date(endTime);
 
-    // For future use...
-    // $scope.articleSelection = _.keys(articleList);
-
-    $scope.articleSelection = [
-      'Touran',
-      'Tiguan',
-      'Amarok'
-    ];
+    $scope.articleSelection = _.keys(articleList);
 
     $scope.find = function() {
       var startTimeQuery = moment($scope.startTimeInput).format('YYYY-MM-DD HH:mm:ss');
@@ -44,7 +37,16 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
         'endTime': endTimeQuery
       }, function(data) {
           // Show all datasets
-          $scope.rejections = data;
+          var articleNames = _.invert(articleList);
+
+          var enrichedData = _
+            .forEach(data, function(value) {
+              var name = articleNames[value.artikel.typcode];
+              _.assign(value, {
+                'bezeichnung': name
+              })
+            })
+          $scope.rejections = enrichedData;
 
           // Refresh displayed dates
           $scope.startTimeDisplay = new Date(startTimeQuery);
@@ -59,11 +61,18 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
           $scope.defectSelection = _.uniq(defectList);
 
           // Defects summary
-          $scope.defectsSummary = _.countBy(defectList);
+          $scope.defectsSummary = _
+            .chain(defectList)
+            .countBy()
+            .entries()
+            .sortBy(function(a) {
+              return a[1];
+            })
+            .reverse()
+            .unzip()
+            .value();
 
           // Article summary
-          var articleNames = _.invert(articleList);
-
           $scope.articlesSummary = _
             .chain(data)
             .flatMap(function(item) {
@@ -73,6 +82,12 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
             .mapKeys(function(value, key) {
               return articleNames[key];
             })
+            .entries()
+            .sortBy(function(a) {
+              return a[1];
+            })
+            .reverse()
+            .unzip()
             .value();
 
           // Charts
@@ -104,11 +119,11 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     };
 
     $scope.updateCharts = function() {
-      $scope.defectBarLabels = _.keys($scope.defectsSummary);
-      $scope.defectBarData = _.values($scope.defectsSummary);
+      $scope.defectBarLabels = $scope.defectsSummary[0];
+      $scope.defectBarData = $scope.defectsSummary[1];
 
-      $scope.articleBarLabels = _.keys($scope.articlesSummary);
-      $scope.articleBarData = _.values($scope.articlesSummary);
+      $scope.articleBarLabels = $scope.articlesSummary[0];
+      $scope.articleBarData = $scope.articlesSummary[1];
     };
 
     // Filter functions
@@ -116,7 +131,7 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
       $scope.search.fehlerart.fehlerart_text = "";
     };
     $scope.clearArticle = function() {
-      $scope.search.artikel.artikelbezeichnung = "";
+      $scope.search.bezeichnung = "";
     };
   }
 ]);
