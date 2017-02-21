@@ -42,11 +42,29 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
           var enrichedData = _
             .forEach(data, function(value) {
               var name = articleNames[value.artikel.typcode];
+              var day = moment(value.datum).subtract(6, 'hours').format('DD.MM.YY');
               _.assign(value, {
-                'bezeichnung': name
+                'bezeichnung': name,
+                'date': day
               })
             })
           $scope.rejections = enrichedData;
+
+          // Test
+          var groupedData = _
+            .chain(enrichedData)
+            .groupBy('date')
+            .value()
+
+          _.each(groupedData, function(value, key) {
+            groupedData[key] = _.groupBy(groupedData[key], 'bezeichnung');
+            _.each(groupedData[key], function(innerValue, innerKey) {
+              groupedData[key][innerKey] = _.countBy(innerValue, 'fehlerart.fehlerart_text');
+            });
+          });
+
+          $scope.groupedData = groupedData;
+          console.log(groupedData);
 
           // Refresh displayed dates
           $scope.startTimeDisplay = new Date(startTimeQuery);
