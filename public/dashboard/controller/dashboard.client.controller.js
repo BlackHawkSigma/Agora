@@ -99,17 +99,34 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .chain(bigPartsExclSpare)
           .filter(function(o) {
             return o.verwendung == 'Ausschuss'
-              // || o.verwendung == 'NA'
-              ;
           })
           .flatMap(function(item) {
             return item.artikeldaten;
           })
+          .sumBy('preis')
           .value();
+
+        var sumValueExclSpare = _.sumBy(bigPartsExclSpare, 'artikeldaten.preis')
+
+        var sumScrapRework = _
+          .chain(bigPartsExclSpare)
+          .filter(function(o) {
+            return  o.verwendung == 'NA'
+          })
+          .flatMap(function(item) {
+            if (item.artikeldaten != undefined) {
+              return (item.artikeldaten.preis - item.rohteilWert)
+            } else {
+              return 0
+            }
+          })
+          .sum()
+          .value()
+
 
         var labelsData = _.unzip(defects);
         var data = _.map(labelsData[1], function(n) {
-          return _.round(n / $scope.sumInclSpare * 100, 1);
+          return _.replace(_.toString(_.round(n / $scope.sumInclSpare * 100, 1)), '.', ',');
         });
         var labels = _.map(labelsData[0], function(value, index) {
           return "".concat(value, ": ", data[index], "% ");
@@ -126,8 +143,9 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         $scope.rft = summaryExclSpare.OK / $scope.sumExclSpare * 100;
         $scope.ftt = summaryInclSpare.OK / $scope.sumInclSpare * 100;
         $scope.frq = _.sum([summaryInclSpare.OK, summaryInclSpare['OK poliert']]) / $scope.sumInclSpare * 100;
-        $scope.scrap = summaryInclSpare.Ausschuss / $scope.sumInclSpare * 100;
-        $scope.paintScrap = _.sumBy(paintScrap, 'preis') / 1000;
+        $scope.scrap = (paintScrap + sumScrapRework) / sumValueExclSpare * 100;
+        $scope.paintScrap = (paintScrap + sumScrapRework) / 1000;
+        $scope.sumValueExclSpare = sumValueExclSpare / 1000;
 
         $scope.defects = defects;
         $scope.defectsChartLabels = labels;
@@ -189,6 +207,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       scales: {
         xAxes: [{
           ticks: {
+            stepSize: 1,
             fontSize : 20,
             beginAtZero: true
           }
