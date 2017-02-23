@@ -93,6 +93,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
             return a[1];
           })
           .reverse()
+          .take(10)
           .value();
 
         var paintScrap = _
