@@ -3,27 +3,21 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
   #alarm.alert.alert-danger(ng-if="err.status==-1" role="alert") <b>Server offline</b> seit {{ lastUpdateHuman }}
   .row
-    .col-md-3#frq
+    .col-xs-6.col-md-4#frq
       .panel.panel-default(data-ng-class="{'panel-success' : frq >= 90, 'panel-danger' : frq < 90 }")
         .panel-heading: h1 FRQ: {{ frq | number: 1 }}%
         .panel-body
           h2 {{ summaryInclSpare.OK + summaryInclSpare['OK poliert'] }} / {{ sumInclSpare }}
-    .col-md-3#rft
+    .col-xs-6.col-md-4#rft
       .panel.panel-default(data-ng-class="{'panel-success' : rft >= 81.7, 'panel-danger' : rft < 81.7 }")
         .panel-heading: h1 RFT: {{ rft | number: 1 }}%
         .panel-body
           h2 {{ summaryExclSpare.OK }} / {{ sumExclSpare }}
-    .col-md-3#scrap
-      .panel.panel-default(data-ng-class="{'panel-success' : scrap <= 1, 'panel-danger' : scrap > 1 }")
-        .panel-heading: h1 Scrap: {{ scrap | number: 1 }}%
+    .col-xs-12.col-md-4#paintScrap
+      .panel.panel-default(data-ng-class="{'panel-success' : scrap <= 5, 'panel-danger' : scrap > 5 }")
+        .panel-heading: h1 Paint Scrap: {{ scrap | number: 1 }}%
         .panel-body
-          h2 {{ summaryInclSpare.Ausschuss }} / {{ sumInclSpare }}
-    .col-md-3#paintScrap
-      .panel.panel-info
-        .panel-heading: h1 Paint Scrap:
-        .panel-body
-          h1 {{ paintScrap | currency}}
-          // h3 {{ summaryExclSpare.Ausschuss }}
+          h2 {{ paintScrap | currency}} / {{ sumValueExclSpare | currency }}
   .row
     .col-md-8
       .panel.panel-info
