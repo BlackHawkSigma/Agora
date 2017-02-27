@@ -15,7 +15,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         }
 
       var startTimeQuery = moment().startOf('hour').set('hour', startHour).format('YYYY-MM-DD HH:mm:ss');
-      if (startHour == 22) {
+      if (hour < 6) {
         startTimeQuery = moment(startTimeQuery).subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')
       }
       var endTimeQuery = moment(startTimeQuery).add(7, 'hours').endOf('hour').format('YYYY-MM-DD HH:mm:ss');
