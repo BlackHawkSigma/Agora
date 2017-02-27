@@ -3,14 +3,16 @@ section(data-ng-controller="FarbtonCtrl" data-ng-init="find()")
 
   #alarm.alert.alert-danger(ng-if="err.status=='500'" role="alert") <b>{{ err.status }}</b> {{ err.data.data.message }}
 
-  table.table.table-hover.table-condensed
-    thead
-      tr
-        th Farbcode
-        th Farbe
-        th Baureihe
-    tbody
-      tr(data-ng-repeat="color in colors")
-        td(data-ng-bind="color.Farbcode")
-        td(data-ng-bind="color.Farbton")
-        td(data-ng-bind="color['Baureihe FT']")
+  .row
+    .col-md-10.col-md-offset-1
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th Farbcode
+            th Farbe
+            th Baureihe
+        tbody
+          tr(data-ng-repeat="color in colors | orderBy: 'Farbton'" data-ng-class="{success : color.aktiv == 1}")
+            td(data-ng-bind="color.Farbcode")
+            td(data-ng-bind="color.Farbton")
+            td(data-ng-bind="color['Baureihe FT']")

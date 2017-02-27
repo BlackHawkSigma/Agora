@@ -15,6 +15,9 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
         }
 
       var startTimeQuery = moment().startOf('hour').set('hour', startHour).format('YYYY-MM-DD HH:mm:ss');
+      if (startHour == 22) {
+        startTimeQuery = moment(startTimeQuery).subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+      }
       var endTimeQuery = moment(startTimeQuery).add(7, 'hours').endOf('hour').format('YYYY-MM-DD HH:mm:ss');
 
       Dashboard.query({
@@ -75,7 +78,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
           .chain(bigPartsInclSpare)
           .filter(function(o) {
             return o.verwendung == 'Ausschuss'
-              || o.verwendung == 'NA';              ;
+              || o.verwendung == 'NA';
           })
           .flatMap(function(item) {
             if (_.has(item, 'fehlerart')) {
@@ -93,6 +96,7 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
             return a[1];
           })
           .reverse()
+          .take(10)
           .value();
 
         var paintScrap = _
@@ -207,7 +211,6 @@ angular.module('dashboard').controller('DashboardCtrl', ['$scope', '$filter','$i
       scales: {
         xAxes: [{
           ticks: {
-            stepSize: 1,
             fontSize : 20,
             beginAtZero: true
           }

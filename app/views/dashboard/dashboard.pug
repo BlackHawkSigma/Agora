@@ -21,7 +21,7 @@ section(data-ng-controller="DashboardCtrl" data-ng-init="refresh()")
   .row
     .col-md-8
       .panel.panel-info
-        .panel-heading: h2 aktuelle Fehler (Ausschuss & Nacharbeit)
+        .panel-heading: h2 aktuelle Fehler (Top 10)
         .panel-body
           canvas#defectsChart.chart.chart-horizontal-bar(chart-data="defectsChartData" chart-labels="defectsChartLabels" chart-options="defectsChartOptions" height="600px")
     .col-md-4
