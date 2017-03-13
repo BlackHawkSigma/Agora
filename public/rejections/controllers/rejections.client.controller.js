@@ -14,7 +14,11 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
       "Tiguan GP Front 18°": 163110000,
       "Tiguan GP R-Line Front": 165050000,
       "Tiguan GP Front 28°": 163230000,
-      "Amarok GP Front": 183870000
+      "Amarok GP Front": 183870000,
+      "Amarok GP Radabd. vorne links": 168500000,
+      "Amarok GP Radabd. vorne rechts": 168501000,
+      "Amarok GP Radabd. hinten links": 183950000,
+      "Amarok GP Radabd. hinten rechts": 183951000
     }
 
     $scope.artikel = null;
