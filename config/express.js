@@ -34,6 +34,7 @@ module.exports = function() {
   require('../app/routes/export.server.routes.js')(app);
   require('../app/routes/rejections.server.routes.js')(app);
   require('../app/routes/dashboard.server.routes.js')(app);
+  require('../app/routes/tools.server.routes.js')(app)
 
   return app;
 };

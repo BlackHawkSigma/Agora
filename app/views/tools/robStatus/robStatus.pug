@@ -1,0 +1,42 @@
+mixin table
+  table.table.table-hover.table-condensed
+    thead
+      tr
+        th Zeitpunkt
+        th Skidnummer
+        th Roboter
+        th Artikel
+        th Farbe
+    tbody
+      tr&attributes(attributes)
+        td(data-ng-bind="entry.Zeitpunkt")
+        td(data-ng-bind="entry.Skid")
+        td(data-ng-bind="entry.Roboter")
+        td(data-ng-bind="entry.Artikel")
+        td(data-ng-bind="entry.Farbe")
+
+
+section(data-ng-controller="RobStatusCtrl")
+  h1.page-header Roboter Status Auswertung
+
+  .row
+    .col-xs-12.col-md-10.col-md-offset-1
+      form
+        .jumbotron.drop-box(ngf-drop="upload($file)" ng-model="file" ngf-drag-over-class="'dragover'" ng-cloak)
+          h2 *.csv Datei aus R&uuml;ckverfolgung hier hinein ziehen
+        button.btn.btn-lg.btn-success(ngf-no-file-drop ngf-select="upload($file)") *.csv Hochloaden
+  .row
+    .col-md-10.col-md-offset-1
+      h2 Basislack <small>{{ summary.BC }}</small>
+      +table(data-ng-repeat="entry in entries | orderBy: 'Zeitpunkt' | filter: Kabine='BC'")
+      h2 Klarlack <small>{{ summary.CC }}</small>
+      +table(data-ng-repeat="entry in entries | orderBy: 'Zeitpunkt' | filter: Kabine='CC'")
+      h2 Primer <small>{{ summary.PR }}</small>
+      +table(data-ng-repeat="entry in entries | orderBy: 'Zeitpunkt' | filter: Kabine='PR'")
+      h2 Befl&auml;mmen <small>{{ summary.FL }}</small>
+      +table(data-ng-repeat="entry in entries | orderBy: 'Zeitpunkt' | filter: Kabine='FL'")
+  .row
+    .col-md-10.col-md-offset-1
+      .well
+        h3 fehlende Stammdaten
+        pre {{ missing | json }}
