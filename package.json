@@ -1,6 +1,6 @@
 {
   "name": "agora",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "App for Paintline 5",
   "main": "server.js",
   "repository": "https://blackhawksigma@github.com/BlackHawkSigma/Agora.git",
@@ -19,6 +19,7 @@
     "bookshelf": "^0.10.3",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
+    "csv-parse": "^1.2.0",
     "debug": "^2.3.3",
     "express": "^4.14.0",
     "express-session": "^1.15.1",
