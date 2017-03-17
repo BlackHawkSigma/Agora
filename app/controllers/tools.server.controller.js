@@ -30,7 +30,5 @@ exports.getRobStatus = function(req, res) {
 
 var seneca = require('seneca')()
   .client({
-    type: 'tcp',
-    port: 10101,
-    host: process.env.HOST_IP
+    host: 'localhost'
   })
