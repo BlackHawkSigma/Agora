@@ -12,13 +12,17 @@ exports.getRobStatus = function(req, res) {
   }, function(err, data) {
     if (err) {
       console.error(err)
-      throw err
+      res.status(500).json({error: true, data: {message: err.message}})
     }
     seneca.act({
       role: 'robStatus',
       cmd: 'findMissing',
       csv: data
     }, function(err, result) {
+      if (err) {
+        console.error(err)
+        res.status(500).json({error: true, data: {message: err.message}})
+      }
       res.json(result)
     })
   })
