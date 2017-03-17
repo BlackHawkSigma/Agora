@@ -4,6 +4,16 @@ const compress = require('compression');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const favicon = require('serve-favicon');
+const fs = require('fs')
+const rfs = require('rotating-file-stream')
+
+// Logging
+var logDirectory = __dirname + '/../log'
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+var accessLogStream = rfs('access.log', {
+  interval: '1d',
+  path: logDirectory
+})
 
 module.exports = function() {
   var app = express();
@@ -12,6 +22,7 @@ module.exports = function() {
     app.use(morgan('dev'));
   } else if (process.env.NODE_ENV === 'production') {
     app.use(morgan('common'));
+    app.use(morgan('[:date[iso]] :remote-addr :remote-user :method :url :status :res[content-length] - :response-time ms', {stream: accessLogStream}))
     app.use(compress());
   }
 
