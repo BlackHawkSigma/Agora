@@ -9,7 +9,7 @@ angular.module('tools_robStatus').controller('RobStatusCtrl', ['$scope', '$filte
         }
       })
       .success(function(respsonse, status, headers, config) {
-        $scope.entries = respsonse.nok
+        $scope.entries = _.groupBy(respsonse.nok, "Kabine")
         $scope.missing = respsonse.missing
         $scope.summary = respsonse.summary
       })
