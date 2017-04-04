@@ -1,4 +1,5 @@
 const csv = require('csv-parse')
+const _ = require('lodash')
 
 exports.render = function(req, res) {
   res.render('tools/robStatus/robstatus')
@@ -31,4 +32,31 @@ exports.getRobStatus = function(req, res) {
 var seneca = require('seneca')()
   .client({
     host: 'localhost'
+exports.getSkidCirculations = function(req, res, next) {
+  seneca.act({
+    role: 'skidCounter',
+    area: 'data',
+    cmd: 'get'
+  }, function(err, result) {
+    if (err) return next(err)
+    res.skidData = _.reject(result, {
+      position: 'unbekannt'
+    })
+    next()
   })
+}
+
+exports.updateSkid = function(req, res, next) {
+  seneca.act({
+    role: 'DEsoftware',
+    part: 'stammdaten',
+    cmd: 'set_Skid',
+    data: req.body.skid
+  }, function(err, result) {
+    next(err)
+  })
+}
+
+exports.getSkidCounterUpdate = function(req, res) {
+  res.render('tools/skidCirculations/input')
+}
