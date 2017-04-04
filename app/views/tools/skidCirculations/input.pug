@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
+
+  body
+    .container
+      .row
+        .div-xs-12
+          form(action="/api/tools/skidCounter" method="POST")
+            .form-group
+              label(for="skid") Skiddaten aus Stammdaten
+              textarea#skid.form-control(name="skid" rows="10")
+            button.btn.btn-success(type="submit") Upload

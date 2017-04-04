@@ -1,0 +1,16 @@
+.table > tbody > tr > td.success {
+  background-color: #5CB85C;
+}
+
+.table > tbody > tr > td.warning {
+  background-color: #F0AD4E;
+}
+
+.table > tbody > tr > td.danger {
+  background-color: #D9534F;
+  font-weight: bold;
+}
+
+.table > tbody > tr > td.info {
+  background-color: #5BC0DE;
+}

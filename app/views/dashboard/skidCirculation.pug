@@ -1,0 +1,33 @@
+mixin field(skid)
+  td(class=skid.color)= skid.skid
+    //- p= skid.name
+    //- p= skid.circulations
+
+mixin progressbar(sum)
+  .progress
+    .progress-bar.progress-bar-success(style="width:" + sum.success + "%")
+    .progress-bar.progress-bar-warning(style="width:" + sum.warning + "%")
+    .progress-bar.progress-bar-danger(style="width:" + sum.danger + "%")
+    .progress-bar.progress-bar-info(style="width:" + sum.info + "%")
+
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="initial-scale=1")
+    link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/css/dashboard/colors.css")
+
+    body
+      .container-fluid
+        .row
+          .col-xs-12
+            .panel.panel-primary
+              .panel-heading
+                h2 #{count} Skids in der Anlage
+                +progressbar(summary)
+              table.table.table-bordered(style="text-align: center;")
+                each chunk in data
+                  tr
+                    each skid in chunk
+                      +field(skid)

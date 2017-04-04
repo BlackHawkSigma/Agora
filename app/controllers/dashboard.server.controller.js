@@ -1,6 +1,7 @@
 var bookshelf = require('../../config/bookshelf.js')();
 var cosmino = require('../models/cosmino.server.model.js');
 var _ = require('lodash');
+const debug = require('debug')('dashboard')
 
 function limitOutput(data, filterArray) {
   var resultArray = [];
@@ -22,6 +23,22 @@ var Artikel = bookshelf.Collection.extend({
 exports.render = function(req, res) {
   res.render('dashboard/dashboard');
 };
+
+exports.renderSkidCirculation = function (req, res) {
+  var summary = _.countBy(res.skidData, 'color')
+  var all = _.sum(_.values(summary))
+  var percent = _.mapValues(summary, function(value) {
+    return _.round(value / all * 100, 2)
+  })
+
+  debug('%O - %O - %O', all, summary, percent)
+
+  res.render('dashboard/skidCirculation', {
+    data: _.chunk(res.skidData, 20),
+    summary: percent,
+    count: all
+  })
+}
 
 exports.list = function(req, res) {
   var exp = {};
