@@ -1,5 +1,6 @@
 const csv = require('csv-parse')
 const _ = require('lodash')
+const seneca = require('../../config/seneca')()
 
 exports.render = function(req, res) {
   res.render('tools/robStatus/robstatus')
@@ -29,9 +30,6 @@ exports.getRobStatus = function(req, res) {
   })
 }
 
-var seneca = require('seneca')()
-  .client({
-    host: 'localhost'
 exports.getSkidCirculations = function(req, res, next) {
   seneca.act({
     role: 'skidCounter',
