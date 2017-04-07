@@ -10,11 +10,27 @@ mixin progressbar(sum)
     .progress-bar.progress-bar-danger(style="width:" + sum.danger + "%")
     .progress-bar.progress-bar-info(style="width:" + sum.info + "%")
 
+mixin details(data)
+  .row
+    .col-xs-6
+      .panel.panel-info
+        .panel-heading
+          h3 Details
+        table.table.table-condensed.table-hover
+          each chunk in data
+            each skid in chunk
+              tr
+                - var label = "label-" + skid.color
+                td=skid.skid
+                td #{skid.name} <span class="label #{label}">#{skid.circulations}</span>
+
+
 doctype html
 html
   head
     meta(charset="utf-8")
     meta(name="viewport" content="initial-scale=1")
+    meta(http-equiv="refresh" content= refresh)
     link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
     link(rel="stylesheet" href="/css/dashboard/colors.css")
 
@@ -24,9 +40,20 @@ html
           .col-xs-12
             .panel.panel-primary
               .panel-heading
-                h2 #{count} Skids in der Anlage
-                +progressbar(summary)
-              table.table.table-bordered(style="text-align: center;")
+                .row
+                  .col-xs-6
+                    h2 #{count} Skids in der Anlage
+                  .col-xs-2
+                    h2
+                      span.label.label-danger= summary.danger
+                  .col-xs-2
+                    h2
+                      span.label.label-warning= summary.warning
+                  .col-xs-2
+                    h2
+                      span.label.label-info= summary.info
+                +progressbar(percent)
+              table#grid.table.table-bordered(style="text-align: center;")
                 each chunk in data
                   tr
                     each skid in chunk

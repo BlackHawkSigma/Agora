@@ -34,8 +34,10 @@ exports.renderSkidCirculation = function (req, res) {
   debug('%O - %O - %O', all, summary, percent)
 
   res.render('dashboard/skidCirculation', {
-    data: _.chunk(res.skidData, 20),
-    summary: percent,
+    refresh: 5 * 60,
+    data: _.chunk(res.skidData, 15),
+    summary: summary,
+    percent: percent,
     count: all
   })
 }
