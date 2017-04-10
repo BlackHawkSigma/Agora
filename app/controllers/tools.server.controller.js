@@ -1,6 +1,7 @@
 const csv = require('csv-parse')
 const _ = require('lodash')
 const seneca = require('../../config/seneca')()
+const debug = require('debug')('controller')
 
 exports.render = function(req, res) {
   res.render('tools/robStatus/robstatus')
@@ -29,6 +30,22 @@ exports.getRobStatus = function(req, res) {
     })
   })
 }
+
+exports.getSkidTimestamp = function (req, res, next) {
+  seneca.act({
+    role: 'DEsoftware',
+    part: 'stammdaten',
+    table: 'skid',
+    cmd: 'get_Timestamp'
+  }, function (err, result) {
+    if (err) return next(err)
+    debug("%O", result)
+    var timestamp = new Date(result.timestamp).toLocaleString()
+    res.timeStamp = timestamp
+    debug("new: %O", res.timeStamp)
+    next()
+  })
+};
 
 exports.getSkidCirculations = function(req, res, next) {
   seneca.act({

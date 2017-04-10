@@ -1,5 +1,5 @@
 mixin field(skid)
-  td(class=skid.color)= skid.skid
+  td(class=skid.color data-toggle="tooltip" data-placement="top" data-container="body" title=skid.name + " - " + skid.circulations)= skid.skid
     //- p= skid.name
     //- p= skid.circulations
 
@@ -34,6 +34,9 @@ html
     link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
     link(rel="stylesheet" href="/css/dashboard/colors.css")
 
+    script(type="text/javascript" src="/lib/jquery/dist/jquery.min.js")
+    script(type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.min.js")
+
     body
       .container-fluid
         .row
@@ -41,20 +44,22 @@ html
             .panel.panel-primary
               .panel-heading
                 .row
-                  .col-xs-6
+                  .col-xs-8
                     h2 #{count} Skids in der Anlage
-                  .col-xs-2
+                    h3 #{update}
+                  .col-xs-4
                     h2
-                      span.label.label-danger= summary.danger
-                  .col-xs-2
-                    h2
+                      span.label.label-success= summary.success
                       span.label.label-warning= summary.warning
-                  .col-xs-2
-                    h2
+                      span.label.label-danger= summary.danger
                       span.label.label-info= summary.info
-                +progressbar(percent)
+                .row
+                  .col-xs-12
+                    +progressbar(percent)
               table#grid.table.table-bordered(style="text-align: center;")
                 each chunk in data
                   tr
                     each skid in chunk
                       +field(skid)
+      script
+        include skidCirculations.js
