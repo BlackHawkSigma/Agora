@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "start": "node server",
-    "test": "DEBUG=server node server"
+    "test": "standard",
+    "fix": "standard --fix"
   },
   "keywords": [
     "paintline"
@@ -49,6 +50,7 @@
     "xlsx": "^0.8.1"
   },
   "devDependencies": {
-    "grunt": "^1.0.1"
+    "grunt": "^1.0.1",
+    "standard": "^10.0.2"
   }
 }

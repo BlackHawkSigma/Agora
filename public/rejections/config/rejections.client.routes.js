@@ -1,9 +1,11 @@
+/* global angular */
+
 angular.module('rejections').config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-    when("/rejections", {
-      templateUrl: "rejections",
-      name: "Rückweisungen"
-    });
+  function ($routeProvider) {
+    $routeProvider
+    .when('/rejections', {
+      templateUrl: 'rejections',
+      name: 'Rückweisungen'
+    })
   }
-]);
+])

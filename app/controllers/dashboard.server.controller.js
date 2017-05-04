@@ -1,33 +1,33 @@
-var bookshelf = require('../../config/bookshelf.js')();
-var cosmino = require('../models/cosmino.server.model.js');
-var _ = require('lodash');
+var bookshelf = require('../../config/bookshelf.js')()
+var cosmino = require('../models/cosmino.server.model.js')
+var _ = require('lodash')
 const debug = require('debug')('dashboard')
 
-function limitOutput(data, filterArray) {
-  var resultArray = [];
-  var dummy = _.each(data, function(input) {
-    var selection = _.pick(input, filterArray);
-    resultArray.push(selection);
-  });
-  return resultArray;
+function limitOutput (data, filterArray) {
+  var resultArray = []
+  _.each(data, function (input) {
+    var selection = _.pick(input, filterArray)
+    resultArray.push(selection)
+  })
+  return resultArray
 };
 
 var Export = bookshelf.Collection.extend({
   model: cosmino.Export()
-});
+})
 
 var Artikel = bookshelf.Collection.extend({
   model: cosmino.Artikel()
-});
+})
 
-exports.render = function(req, res) {
-  res.render('dashboard/dashboard');
-};
+exports.render = function (req, res) {
+  res.render('dashboard/dashboard')
+}
 
 exports.renderSkidCirculation = function (req, res) {
   var summary = _.countBy(res.skidData, 'color')
   var all = _.sum(_.values(summary))
-  var percent = _.mapValues(summary, function(value) {
+  var percent = _.mapValues(summary, function (value) {
     return _.round(value / all * 100, 2)
   })
 
@@ -43,13 +43,14 @@ exports.renderSkidCirculation = function (req, res) {
   })
 }
 
-exports.list = function(req, res) {
-  var exp = {};
-  var art = {};
+exports.list = function (req, res, next) {
+  var exp = {}
+  var art = {}
 
-  var done = _.after(2, function() {
-    _.forEach(exp, function(value, index) {
-      var artikel = _.find(art, {'Material': value.typcode});
+  var done = _.after(2, function () {
+    _.forEach(exp, function (value, index) {
+      var artikel = _.find(art, {'Material': value.typcode})
+      // TODO: use _.get
       if (artikel != undefined) {
         _.assign(value, {
           'rohteilWert': artikel.Rohteilpreis
@@ -71,36 +72,36 @@ exports.list = function(req, res) {
       'fahrweg',
       'artikelart'
     ]))
-  });
+  })
 
   Export
-    .query(function(qb) {
+    .query(function (qb) {
       qb.select(['sid', 'artikelcode', 'datum', 'fehlerart_code', 'io_notouch', 'io_poliert', 'nacharbeit', 'ausschuss', 'Fahrweg'])
         .whereBetween('datum', [req.query.startTime, req.query.endTime])
     })
     .fetch({
       withRelated: ['fehlerart', 'artikeldaten']
     })
-    .then(function(result) {
+    .then(function (result) {
       exp = result.toJSON()
       done()
     })
-    .catch(function(err) {
-      console.error(err);
-      res.status(500).json({error: true, data: {message: err.message}});
-      next();
+    .catch(function (err) {
+      console.error(err)
+      res.status(500).json({error: true, data: {message: err.message}})
+      next()
     })
 
   Artikel
     .forge()
     .fetch()
-    .then(function(result) {
+    .then(function (result) {
       art = result.toJSON()
       done()
     })
-    .catch(function(err) {
-      console.error(err);
-      res.status(500).json({error: true, data: {message: err.message}});
-      next();
+    .catch(function (err) {
+      console.error(err)
+      res.status(500).json({error: true, data: {message: err.message}})
+      next()
     })
 }

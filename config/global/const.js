@@ -1,10 +1,10 @@
 module.exports = {
   rejections: {
     decisionCodes: [
-      "OK_poliert",
-      "NA",
-      "Ausschuss",
-      "OK"
+      'OK_poliert',
+      'NA',
+      'Ausschuss',
+      'OK'
     ]
   }
-};
+}

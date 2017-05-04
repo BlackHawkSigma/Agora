@@ -1,1 +1,3 @@
-angular.module('farbton', []);
+/* global angular */
+
+angular.module('farbton', [])

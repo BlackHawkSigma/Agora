@@ -1,38 +1,40 @@
-angular.module('paintlineApp').directive('ngPrint', [function() {
-  var printSection = document.getElementById('printSection');
+/* global angular */
+
+angular.module('paintlineApp').directive('ngPrint', [function () {
+  var printSection = document.getElementById('printSection')
 
   // If there is no printing section, create one
   if (!printSection) {
-    printSection = document.createElement('div');
-    printSection.id = 'printSection';
-    document.body.appendChild(printSection);
+    printSection = document.createElement('div')
+    printSection.id = 'printSection'
+    document.body.appendChild(printSection)
   }
 
-  function link(scope, element, attrs) {
-    element.on('click', function() {
+  function link (scope, element, attrs) {
+    element.on('click', function () {
       // Clear print section
-      printSection.innerHTML = '';
-      var elementToPrint = document.getElementById(attrs.printElementId);
+      printSection.innerHTML = ''
+      var elementToPrint = document.getElementById(attrs.printElementId)
       if (elementToPrint) {
-        printElement(elementToPrint);
-        window.print();
+        printElement(elementToPrint)
+        window.print()
       }
-    });
+    })
 
-    window.onafterprint = function() {
+    window.onafterprint = function () {
       //  Clean the print section
-      printSection.innerHTML = '';
+      printSection.innerHTML = ''
     }
   }
 
-  function printElement(element) {
+  function printElement (element) {
     // Clone the printable element
-    var domClone = element.cloneNode(true);
-    printSection.appendChild(domClone);
+    var domClone = element.cloneNode(true)
+    printSection.appendChild(domClone)
   }
 
   return {
     link: link,
     restrict: 'A'
-  };
-}]);
+  }
+}])

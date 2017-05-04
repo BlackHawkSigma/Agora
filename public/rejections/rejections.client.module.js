@@ -1,1 +1,3 @@
-angular.module('rejections', ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'chart.js']);
+/* global angular */
+
+angular.module('rejections', ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'chart.js'])

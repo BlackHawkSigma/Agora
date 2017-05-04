@@ -1,6 +1,6 @@
-var lack5_export = require('../../app/controllers/export.server.controller');
+var lackExport = require('../../app/controllers/export.server.controller')
 
-module.exports = function(app) {
-  app.route('/api/export').get(lack5_export.list);
-  app.route('/api/rejections').get(lack5_export.listRejections);
-};
+module.exports = function (app) {
+  app.route('/api/export').get(lackExport.list)
+  app.route('/api/rejections').get(lackExport.listRejections)
+}

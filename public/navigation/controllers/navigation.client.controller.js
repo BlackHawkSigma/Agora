@@ -1,14 +1,14 @@
+/* global angular */
+
 angular.module('paintlineApp').controller('NavCtrl', ['$scope', '$interval',
-function($scope, $interval) {
+  function ($scope, $interval) {
+    function updateClock () {
+      $scope.nowUnix = new Date().getTime() / 1000 | 0
+    };
 
-  function updateClock() {
-    $scope.nowUnix = new Date().getTime() / 1000 | 0;
-  };
+    var stopClock = $interval(updateClock, 100)
 
-  stopClock = $interval(updateClock, 100);
-
-  $scope.$on('$destroy', function() {
-    $interval.cancel(stopClock);
-  });
-
-}]);
+    $scope.$on('$destroy', function () {
+      $interval.cancel(stopClock)
+    })
+  }])

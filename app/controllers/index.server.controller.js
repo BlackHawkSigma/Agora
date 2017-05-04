@@ -1,4 +1,6 @@
 exports.render = function (req, res) {
+  var title
+
   if (process.env.NODE_ENV === 'development') {
     title = 'Agora - Dev'
   } else {
@@ -7,5 +9,5 @@ exports.render = function (req, res) {
 
   res.render('index', {
     title: title
-  });
-};
+  })
+}

@@ -1,17 +1,17 @@
-module.exports = function() {
+module.exports = function () {
   var seneca = require('seneca')()
     .client({
-      pin: "role: robStatus",
+      pin: 'role: robStatus',
       host: process.env.HOST_IP,
       port: 10102
     })
     .client({
-      pin: "role: DEsoftware",
+      pin: 'role: DEsoftware',
       host: process.env.HOST_IP,
       port: 10103
     })
     .client({
-      pin: "role: skidCounter",
+      pin: 'role: skidCounter',
       host: process.env.HOST_IP,
       port: 10104
     })
