@@ -1,9 +1,11 @@
+/* global angular */
+
 angular.module('dashboard').config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-    when("/dashboard", {
-      templateUrl:"dashboard",
-      name: "Dashboard"
-    });
+  function ($routeProvider) {
+    $routeProvider
+    .when('/dashboard', {
+      templateUrl: 'dashboard',
+      name: 'Dashboard'
+    })
   }
-]);
+])

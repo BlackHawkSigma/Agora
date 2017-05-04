@@ -1,1 +1,3 @@
-angular.module('artikel', []);
+/* global angular */
+
+angular.module('artikel', [])

@@ -1,148 +1,142 @@
-var bookshelf = require('../../config/bookshelf.js')();
-var codes = require('../../config/global/const.js');
+var bookshelf = require('../../config/bookshelf.js')()
+var codes = require('../../config/global/const.js')
 
 var Artikel = bookshelf.Model.extend({
-  tableName: "artikel"
-});
-exports.Artikel = function() {
-  return Artikel;
-};
+  tableName: 'artikel'
+})
+exports.Artikel = function () {
+  return Artikel
+}
 
 var ArtikelDaten = bookshelf.Model.extend({
-  tableName: "artikeldaten"
-});
-exports.ArtikelDaten = function() {
-  return ArtikelDaten;
-};
+  tableName: 'artikeldaten'
+})
+exports.ArtikelDaten = function () {
+  return ArtikelDaten
+}
 
 var Farbton = bookshelf.Model.extend({
-  tableName: "farbton"
-});
-exports.Farbton = function() {
-  return Farbton;
-};
+  tableName: 'farbton'
+})
+exports.Farbton = function () {
+  return Farbton
+}
 
 var Export = bookshelf.Model.extend({
-  tableName: "lack5_export",
+  tableName: 'lack5_export',
   virtuals: {
-    farbcode: function() {
-      if (this.get('artikelcode') != undefined) {
-        return this.get('artikelcode').toString().slice(-3);
+    farbcode: function () {
+      if (this.get('artikelcode') !== undefined) {
+        return this.get('artikelcode').toString().slice(-3)
       } else {
-        return null;
+        return null
       }
     },
-    typcode: function() {
-      if (this.get('artikelcode') != undefined) {
-        return this.get('artikelcode').toString().slice(1, -3);
+    typcode: function () {
+      if (this.get('artikelcode') !== undefined) {
+        return this.get('artikelcode').toString().slice(1, -3)
       } else {
-        return null;
+        return null
       }
     },
-    verwendung: function() {
-      if (this.get('io_notouch') == 1 ) {
-        return 'OK';
-      } else if (this.get('io_poliert') == 1) {
-        return 'OK poliert';
-      } else if (this.get('nacharbeit') == 1) {
-        return 'NA';
-      } else if (this.get('ausschuss') == 1) {
-        return 'Ausschuss';
+    verwendung: function () {
+      if (this.get('io_notouch') === 1) {
+        return 'OK'
+      } else if (this.get('io_poliert') === 1) {
+        return 'OK poliert'
+      } else if (this.get('nacharbeit') === 1) {
+        return 'NA'
+      } else if (this.get('ausschuss') === 1) {
+        return 'Ausschuss'
       } else {
-        return 'n/a';
+        return 'n/a'
       }
     },
-    fahrweg: function() {
+    fahrweg: function () {
       switch (this.get('Fahrweg')) {
         case 340:
         case 360:
-          return 'Normal';
-          break;
+          return 'Normal'
         case 331:
-          return 'ET';
-          break;
+          return 'ET'
         default:
-          return 'n/a';
+          return 'n/a'
       }
     },
-    basis: function() {
+    basis: function () {
       switch (this.get('artikelart')) {
         case '0':
-          return 'Rohteil';
-          break;
+          return 'Rohteil'
         case '1':
-          return 'NA';
-          break;
+          return 'NA'
         default:
-          return 'n/a';
+          return 'n/a'
       }
     },
-    artikelart: function() {
+    artikelart: function () {
       switch (this.get('Fahrweg')) {
         case 340:
         case 331:
-          return 'Großteil';
-          break;
+          return 'Großteil'
         case 360:
-          return 'Kleinteil';
-          break;
+          return 'Kleinteil'
         default:
-          return 'n/a';
+          return 'n/a'
       }
     }
   },
-  fehlerart: function() {
-    return this.hasOne(FehlerArt, 'fehlerart_code', 'fehlerart_code');
+  fehlerart: function () {
+    return this.hasOne(FehlerArt, 'fehlerart_code', 'fehlerart_code')
   },
-  fehlerort: function() {
-    return this.belongsTo(FehlerOrt, 'fehlerort_code', 'fehlerort_code');
+  fehlerort: function () {
+    return this.belongsTo(FehlerOrt, 'fehlerort_code', 'fehlerort_code')
   },
-  artikeldaten: function() {
-    return this.hasOne(ArtikelDaten, 'materialnummer', 'artikelcode');
+  artikeldaten: function () {
+    return this.hasOne(ArtikelDaten, 'materialnummer', 'artikelcode')
   }
-});
-exports.Export = function() {
-  return Export;
-};
+})
+exports.Export = function () {
+  return Export
+}
 
 var FehlerArt = bookshelf.Model.extend({
-  tableName: "lack5_fehlerart",
-  fehlerart: function() {
-    return this.belongsToMany(Export, 'fehlerart_code', 'fehlerart_code');
+  tableName: 'lack5_fehlerart',
+  fehlerart: function () {
+    return this.belongsToMany(Export, 'fehlerart_code', 'fehlerart_code')
   }
-});
-exports.FehlerArt = function() {
-  return FehlerArt;
-};
+})
+exports.FehlerArt = function () {
+  return FehlerArt
+}
 
 var FehlerOrt = bookshelf.Model.extend({
-  tableName: "lack5_fehlerort"
-});
-exports.FehlerOrt = function() {
-  return FehlerOrt;
-};
+  tableName: 'lack5_fehlerort'
+})
+exports.FehlerOrt = function () {
+  return FehlerOrt
+}
 
 var VersuchsObjekte = bookshelf.Model.extend({
-  tableName: "vo"
-});
-exports.VersuchsObjekte = function() {
-  return VersuchsObjekte;
-};
+  tableName: 'vo'
+})
+exports.VersuchsObjekte = function () {
+  return VersuchsObjekte
+}
 
 var Rejections = bookshelf.Model.extend({
-  tableName: "nachkontrolle",
+  tableName: 'nachkontrolle',
   virtuals: {
-    verwendung: function() {
-      return codes.rejections.decisionCodes[this.get('bewertung') - 1];
+    verwendung: function () {
+      return codes.rejections.decisionCodes[this.get('bewertung') - 1]
     }
   },
-  artikel: function() {
-    return this.belongsTo(Export, 'barcode', 'barcode');
+  artikel: function () {
+    return this.belongsTo(Export, 'barcode', 'barcode')
   },
-  fehlerart: function() {
-    return this.hasOne(FehlerArt, 'fehlerart_code', 'fehlerart_code');
+  fehlerart: function () {
+    return this.hasOne(FehlerArt, 'fehlerart_code', 'fehlerart_code')
   }
-});
-exports.Rejections = function() {
-  return Rejections;
-};
+})
+exports.Rejections = function () {
+  return Rejections
+}
