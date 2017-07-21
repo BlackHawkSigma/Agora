@@ -72,7 +72,7 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
         })
 
         $scope.groupedData = groupedData
-        console.log(groupedData)
+        // console.log(groupedData)
 
           // Refresh displayed dates
         $scope.startTimeDisplay = new Date(startTimeQuery)
@@ -160,6 +160,20 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     }
     $scope.clearVerwendung = function () {
       $scope.search.verwendung = ''
+    }
+
+    $scope.copyToClipboard = function () {
+      var table = document.getElementById('rejectionstable')
+      var range = document.createRange()
+      var selection = window.getSelection()
+
+      selection.removeAllRanges()
+
+      range.selectNodeContents(table)
+      selection.addRange(range)
+
+      document.execCommand('copy')
+      selection.removeAllRanges()
     }
   }
 ])

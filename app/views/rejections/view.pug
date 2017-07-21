@@ -10,8 +10,10 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
     .form-group
       input.form-control(type="datetime-local" placeholder="bis" data-ng-model="endTimeInput")
     .form-group
-      button.btn.btn-danger(ng-click="find()") Update
+      button.btn.btn-primary(ng-click="find()") Update
     .form-group
+      button.btn.btn-success(data-ng-click="copyToClipboard()") Tabelle Kopieren
+    //- .form-group
       button.btn.btn-success(ng-click="updateCharts()") Charts
 
   .well
@@ -20,14 +22,14 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
         .row
           .col-xs-6
             p Summe nach Fehler
-          .col-xs-6
+          //- .col-xs-6
             botton.btn.btn-primary(ng-print print-element-id="defectsChart" disabled="disabled"): i.glyphicon.glyphicon-print  Drucken
         // pre {{ defectsSummary | json:4 }}
       .col-md-6
         .row
           .col-xs-6
             p Summe nach Artikel
-          .col-xs-6
+          //- .col-xs-6
             botton.btn.btn-primary(ng-print print-element-id="articlesChart" disabled="disabled"): i.glyphicon.glyphicon-print  Drucken
         // pre {{ articlesSummary | json:4 }}
     .row
@@ -63,7 +65,7 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
             button.btn.btn-default(type="button" data-ng-click="clearVerwendung()"): i.glyphicon.glyphicon-remove
 
 
-  .row
+  //- .row
     botton.btn.btn-primary(ng-print print-element-id="rejectionstable"): i.glyphicon.glyphicon-print  Drucken
   .row
     .col-xs-12
