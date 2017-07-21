@@ -19,13 +19,13 @@ mixin table
 section(data-ng-controller="RobStatusCtrl")
   h1.page-header Roboter Status Auswertung
 
-  .row
+  .row(ng-show="inputVisible")
     .col-xs-12.col-md-10.col-md-offset-1
       form
         .jumbotron.drop-box(ngf-drop="upload($file)" ng-model="file" ngf-drag-over-class="'dragover'" ng-cloak)
           h2 *.csv Datei aus R&uuml;ckverfolgung hier hinein ziehen
         button.btn.btn-lg.btn-success(ngf-no-file-drop ngf-select="upload($file)") *.csv Hochloaden
-  .row
+  .row(ng-show="resultVisible")
     .col-md-10.col-md-offset-1
       h2 Basislack <small>{{ summary.BC }}</small>
       +table(data-ng-repeat="entry in entries.BC | orderBy: 'Zeitpunkt'")
@@ -35,7 +35,7 @@ section(data-ng-controller="RobStatusCtrl")
       +table(data-ng-repeat="entry in entries.PR")
       h2 Befl&auml;mmen <small>{{ summary.FL }}</small>
       +table(data-ng-repeat="entry in entries.FL")
-  .row
+  .row(ng-show="resultVisible")
     .col-md-10.col-md-offset-1
       .well
         h3 fehlende Stammdaten

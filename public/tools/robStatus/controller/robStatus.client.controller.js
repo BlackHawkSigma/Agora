@@ -2,6 +2,9 @@
 
 angular.module('tools_robStatus').controller('RobStatusCtrl', ['$scope', '$filter', 'Upload', 'Tools',
   function ($scope, $filter, Upload, Tools) {
+    $scope.inputVisible = true
+    $scope.resultVisible = false
+
     $scope.upload = function (file) {
       Upload.upload({
         url: 'api/tools/robStatus',
@@ -13,6 +16,8 @@ angular.module('tools_robStatus').controller('RobStatusCtrl', ['$scope', '$filte
         $scope.entries = _.groupBy(respsonse.nok, 'Kabine')
         $scope.missing = respsonse.missing
         $scope.summary = respsonse.summary
+        $scope.inputVisible = false
+        $scope.resultVisible = true
       })
     }
   }
