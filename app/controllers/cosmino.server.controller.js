@@ -9,3 +9,7 @@ exports.renderArtikel = function (req, res) {
 exports.renderFarbton = function (req, res) {
   res.render('cosmino/farbton')
 }
+
+exports.renderFarbtonmessungInterface = function (req, res) {
+  res.render('cosmino/farbtonmessungInterface')
+}

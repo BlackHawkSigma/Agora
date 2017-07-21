@@ -51,15 +51,18 @@ exports.listRejections = function (req, res) {
         res.send(data)
       } else {
         res.json(limitOutput(result, [
-          'datum',
-          'artikel.artikelbezeichnung',
-          'fehlerart.fehlerart_text',
-          'verwendung',
-          'artikel.datum',
-          'artikel.verwendung',
+          'barcode',
+          'bewertung',
+          'fehlerart.fehlerart_code',
           'artikel.personalnummer',
+          'fehlerart.fehlerart_text',
+          'datum',
+          'artikel.datum',
+          'artikel.artikelbezeichnung',
+          'artikel.io_poliert',
+          'artikel.io_notouch',
           'artikel.typcode',
-          'barcode'
+          'verwendung'
         ]))
       }
     }).catch(function (err) {

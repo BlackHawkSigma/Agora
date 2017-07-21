@@ -1,0 +1,83 @@
+doctype html
+html
+  head
+    title Farbton Auswertung
+    link(rel="stylesheet" href="http://localhost:3000/lib/bootstrap/dist/css/bootstrap.min.css")
+    // style.
+      @media print {
+        table, ul {
+          font-size: 9pt;
+        }
+      }
+  body
+    - moment.locale('de')
+    - var counts = _.countBy(list, 'status')
+    - var lastCounts = _.countBy(firstList, 'status')
+    .container-fluid
+      .row
+        .col-xs-12
+          h3.page-header NOK Farbtonmessungen <small>Stand: #{dateFirst} - #{dateSecond}</small>
+      .row
+        - var deltaSerie = counts.serie - lastCounts.serie
+        - var preDeltaSerie = deltaSerie >= 0 ? "+" : ""
+        - var deltaProject = counts.project - lastCounts.project
+        - var preDeltaProject = deltaProject >= 0 ? "+" : ""
+        .col-xs-6
+          h4 Anzahl ohne Amarok: #{lastCounts.serie} -&gt; #{counts.serie} (#{preDeltaSerie}#{deltaSerie})
+        .col-xs-6
+          h4 Anzahl nur Amarok: #{lastCounts.project} -&gt; #{counts.project} (#{preDeltaProject}#{deltaProject})
+        .col-xs-12
+          hr.visible-print-block
+      .row
+        .col-xs-12.col-md-6
+          unless ok.length === 0
+            h4 wieder OK gemessen
+            ul
+              each item in ok
+                li= item
+        .col-xs-12.col-md-6
+          unless nok.length === 0
+            h4 neu NOK gemessen
+            ul
+              each item in nok
+                li= item
+      .row
+        .col-xs-12.col-md-6
+          h4 aktuelle NOK Messungen (ohne Amarok): #{counts.serie}
+          table.table.table-hover.table-condensed
+            tr
+              // th #
+              th Datum
+              // th
+              th Artikel
+              th Farbton
+              th mde
+            each item, index in list
+              unless item.status === 'project'
+                tr
+                  // td= index + 1
+                  td= moment(item.datum).format('L LT')
+                  // td= moment(item.datum).fromNow()
+                  td= item.Materialkurztext
+                  td= item.Farbton
+                  td= item.mde / 10
+          hr.visible-print-block
+        .col-xs-12.col-md-6
+          h4 aktuelle NOK Messungen (nur Amarok): #{counts.project}
+          table.table.table-hover.table-condensed
+            tr
+              // th #
+              th Datum
+              // th
+              th Artikel
+              th Farbton
+              th mde
+            each item, index in list
+              unless item.status === 'serie'
+                tr
+                  // td= index + 1
+                  td= moment(item.datum).format('L LT')
+                  // td= moment(item.datum).fromNow()
+                  td= item.Materialkurztext
+                  td= item.Farbton
+                  td= item.mde / 10

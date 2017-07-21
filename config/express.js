@@ -19,6 +19,9 @@ var accessLogStream = rfs('access.log', {
 module.exports = function () {
   var app = express()
 
+  app.locals.moment = require('moment')
+  app.locals._ = require('lodash')
+
   if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
   } else if (process.env.NODE_ENV === 'production') {

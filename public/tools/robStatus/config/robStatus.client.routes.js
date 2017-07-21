@@ -5,7 +5,7 @@ angular.module('tools_robStatus').config(['$routeProvider',
     $routeProvider
       .when('/tools/robStatus', {
         templateUrl: 'tools',
-        name: 'Tools'
+        name: 'Roboter Status'
       })
   }
 ])

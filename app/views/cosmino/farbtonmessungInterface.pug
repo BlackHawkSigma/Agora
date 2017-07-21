@@ -1,0 +1,27 @@
+section(data-ng-controller="FarbtonMessungCtrl" data-ng-init="init()")
+  style.
+    .full button span {
+      background-color: limegreen;
+      border-radius: 32px;
+      color: black;
+    }
+    .partially button span {
+      background-color: orange;
+      border-radius: 32px;
+      color: black;
+    }
+
+  h1.page-header Auswahl Zeitraum NOK Farbtonmessungen
+  .row
+    .col-md-4
+      h4 von:
+      <div style="display:inline-block; min-height:290px;">
+        <div uib-datepicker ng-model="from" class="well well-sm" datepicker-options="options" close-text="Close"></div>
+      </div>
+    .col-md-4
+      h4 bis:
+      <div style="display:inline-block; min-height:290px;">
+        <div uib-datepicker ng-model="to" class="well well-sm" datepicker-options="options"></div>
+      </div>
+    .col-md-4
+      a.btn.btn-lg.btn-success(ng-href="/api/farbtonmessung/{{ from | date: 'yyyy-MM-dd' }}/{{ to | date: 'yyyy-MM-dd' }}") PDF Auswertung
