@@ -59,11 +59,40 @@ section(data-ng-controller="RejectionsCtrl" data-ng-init="find()")
         .input-group#searchDecision
           .input-group-addon: i.glyphicon.glyphicon-search
           input.form-control(type="text" data-ng-model="search.verwendung" data-ng-change="updateCharts()" placeholder="Verwendung")
+          span.input-group-btn
+            button.btn.btn-default(type="button" data-ng-click="clearVerwendung()"): i.glyphicon.glyphicon-remove
 
 
   .row
     botton.btn.btn-primary(ng-print print-element-id="rejectionstable"): i.glyphicon.glyphicon-print  Drucken
   .row
+    .col-xs-12
+      table#rejectionstable.table.table-condensed.table-bordered
+        thead
+          tr
+            th barcode
+            th bewertung
+            th fehlerart_code
+            th personalnummer
+            th fehlerart_text
+            th nachkontrolle_datum
+            th lack5_export_datum
+            th artikelbezeichnung
+            th io_poliert
+            th io_notouch
+        tbody
+          tr(data-ng-repeat="item in rejections | filter:search")
+            td(data-ng-bind="item.barcode")
+            td(data-ng-bind="item.bewertung")
+            td(data-ng-bind="item.fehlerart.fehlerart_code")
+            td(data-ng-bind="item.artikel.personalnummer")
+            td(data-ng-bind="item.fehlerart.fehlerart_text")
+            td(data-ng-bind="item.datum | date:'dd.MM.yyyy hh:mm:ss'")
+            td(data-ng-bind="item.artikel.datum | date:'dd.MM.yyyy hh:mm:ss'")
+            td(data-ng-bind="item.artikel.artikelbezeichnung")
+            td(data-ng-bind="item.artikel.io_poliert")
+            td(data-ng-bind="item.artikel.io_notouch")
+  //.row
     .col-lg-10.col-lg-offset-1.col-xs-12
       table#rejectionstable.table.table-hover.table-condensed
         thead

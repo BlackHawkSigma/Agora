@@ -20,7 +20,9 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
       'Amarok GP Radabd. vorne links': 168500000,
       'Amarok GP Radabd. vorne rechts': 168501000,
       'Amarok GP Radabd. hinten links': 183950000,
-      'Amarok GP Radabd. hinten rechts': 183951000
+      'Amarok GP Radabd. hinten rechts': 183951000,
+      "Amarok GP Verbr. vorne links": 183940000,
+      "Amarok GP Verbr. vorne rechts": 183941000
     }
 
     $scope.artikel = null
@@ -155,6 +157,9 @@ angular.module('rejections').controller('RejectionsCtrl', ['$scope', '$filter', 
     }
     $scope.clearArticle = function () {
       $scope.search.bezeichnung = ''
+    }
+    $scope.clearVerwendung = function () {
+      $scope.search.verwendung = ''
     }
   }
 ])
