@@ -3,4 +3,5 @@ module.exports = function (app) {
   app.get('/cosmino/view', view.render)
   app.get('/cosmino/artikel', view.renderArtikel)
   app.get('/cosmino/farbton', view.renderFarbton)
+  app.get('/cosmino/farbtonmessungInterface', view.renderFarbtonmessungInterface)
 }

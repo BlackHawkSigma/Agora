@@ -1,6 +1,7 @@
 node_modules/
 public/lib/
-*log
+*.log
 config/env/development.js
 config/env/production.js
 config/global/employees.json
+tmp/

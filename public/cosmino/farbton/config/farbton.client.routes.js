@@ -7,5 +7,9 @@ angular.module('farbton').config(['$routeProvider',
       templateUrl: 'cosmino/farbton',
       name: 'Farben'
     })
+    .when('/farbtonmessungen', {
+      templateUrl: 'cosmino/farbtonmessungInterface',
+      name: 'Farbtonmessungen'
+    })
   }
 ])
